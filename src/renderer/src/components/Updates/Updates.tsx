@@ -16,7 +16,7 @@ export const Updates = () => {
     }
   }, []);
   return (
-    <section className="container">
+    <>
       <header
         className="flex"
         style={{ justifyContent: 'space-between', paddingBottom: 'var(--pico-spacing)' }}
@@ -26,8 +26,10 @@ export const Updates = () => {
           {t('homePage.print')}
         </button> */}
       </header>
-      <UpdatesTable updates={updates} />
+      <section>
+        <UpdatesTable updates={updates} />
+      </section>
       <AddUpdateFormDialog />
-    </section>
+    </>
   );
 };

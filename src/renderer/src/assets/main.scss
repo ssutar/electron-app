@@ -11,8 +11,8 @@
 );
 
 :root {
-  --pico-font-size: 80%;
-  --pico-spacing: 0.75rem;
+  --pico-font-size: 90%;
+  // --pico-spacing: 0.75rem;
   --pico-form-element-spacing-vertical: 0.5rem;
   --pico-form-element-spacing-horizontal: 0.75rem;
 }
@@ -53,7 +53,7 @@
 }
 
 main {
-  padding: var(--pico-spacing) 0;
+  // padding: var(--pico-spacing) 0;
 }
 
 main > * {
@@ -110,4 +110,27 @@ h6 {
 
 .container-fixed {
   max-width: 512px;
+}
+
+.main-nav-header {
+  top: 0;
+  border-bottom-color: var(--pico-header-border-color);
+  box-shadow: var(--pico-card-box-shadow);
+  position: sticky;
+  max-width: 100% !important;
+  width: 100%;
+  backdrop-filter: blur(1rem);
+  background-color: var(--pico-header-background);
+  transition:
+    border-top-color 0.4s ease-in-out,
+    box-shadow 0.4s ease-in-out;
+
+  details.dropdown summary:not([role]) {
+    background-color: transparent;
+    border: none;
+  }
+}
+
+#root > main {
+  padding-top: calc(var(--pico-spacing) * 3);
 }

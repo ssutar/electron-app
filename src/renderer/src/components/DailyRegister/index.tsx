@@ -22,7 +22,7 @@ export const DailyRegister = () => {
     window.api.print();
   };
   return (
-    <section className="container">
+    <>
       <header
         className="flex"
         style={{ justifyContent: 'space-between', paddingBottom: 'var(--pico-spacing)' }}
@@ -33,8 +33,10 @@ export const DailyRegister = () => {
         </button>
       </header>
       <DateInputForm currentDate={currentDate} onDateChange={setCurrentDate} />
-      <DailyRegisterTable dailyUpdates={dailyUpdates} />
+      <section>
+        <DailyRegisterTable dailyUpdates={dailyUpdates} />
+      </section>
       <DailyUpdateFormDialog date={currentDate} />
-    </section>
+    </>
   );
 };

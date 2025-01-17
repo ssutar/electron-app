@@ -6,26 +6,41 @@ export const RequireAuth = () => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? (
     <>
-      <nav className="container">
-        <ul>
-          <li>
-            <Link to="/dashboard">Home</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/updates">Updates</Link>
-          </li>
-          {/* <li>
+      <header className="main-nav-header">
+        <nav className="container">
+          <ul>
+            <li>
+              <Link to="/dashboard">
+                <strong>Home</strong>
+              </Link>
+            </li>
+          </ul>
+          <ul>
+            <li>
+              <Link to="/dashboard/updates">Updates</Link>
+            </li>
+            {/* <li>
             <Link to="/dashboard/daily-updates">Daily updates</Link>
           </li> */}
-          <li>
-            <Link to="/dashboard/profile">Profile</Link>
-          </li>
-          <li>
-            <Link to="/dashboard/logout">Logout</Link>
-          </li>
-        </ul>
-      </nav>
-      <Outlet />
+            <li>
+              <details className="dropdown">
+                <summary>Account</summary>
+                <ul dir="rtl">
+                  <li>
+                    <Link to="/dashboard/profile">My profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/dashboard/logout">Logout</Link>
+                  </li>
+                </ul>
+              </details>
+            </li>
+          </ul>
+        </nav>
+      </header>
+      <main className="container">
+        <Outlet />
+      </main>
     </>
   ) : (
     <Navigate to="/login" replace />
