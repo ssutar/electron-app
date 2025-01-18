@@ -7,23 +7,23 @@ import { StatusPage } from './components/StatusPage';
 import { Home } from './components/Home';
 import { Updates } from './components/Updates';
 import DefaultLayout from './components/layout/DefaultLayout';
+import { LoginPage } from './pages/LoginPage';
+import { SignUpPage } from './pages/SignUpPage';
 
 function App() {
   return (
     <Router>
       <AuthContextProvider>
-        <DefaultLayout>
-          <Routes>
-            <Route path="/dashboard" element={<RequireAuth />}>
-              <Route index element={<DailyRegister />} />
-              <Route path="updates" element={<Updates />} />
-            </Route>
-            <Route path="/login" element={<LoginForm />} />
-            <Route path="/signup" element={<SignupForm />} />
-            <Route path="/status" element={<StatusPage />} />
-            <Route path="/" element={<Home />} />
-          </Routes>
-        </DefaultLayout>
+        <Routes>
+          <Route path="/dashboard" element={<RequireAuth />}>
+            <Route index element={<DailyRegister />} />
+            <Route path="updates" element={<Updates />} />
+          </Route>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/status" element={<StatusPage />} />
+          <Route path="/" element={<Home />} />
+        </Routes>
       </AuthContextProvider>
     </Router>
   );

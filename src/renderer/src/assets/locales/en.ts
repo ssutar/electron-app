@@ -1,5 +1,8 @@
 export default {
   translation: {
+    global: {
+      appName: 'TeacherUp'
+    },
     homePage: {
       title: 'Daily updates',
       print: 'Print'
@@ -154,6 +157,7 @@ export default {
     },
 
     loginForm: {
+      title: 'Sign in to TeacherUp',
       email: 'Email',
       password: 'Password',
       login: 'Login',
@@ -169,6 +173,7 @@ export default {
       }
     },
     signupForm: {
+      title: 'SignUp to TeacherUp',
       email: 'Email',
       name: 'Name',
       password: 'Password',
