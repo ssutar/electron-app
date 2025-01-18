@@ -30,12 +30,14 @@ export const AuthContextProvider = ({ children }) => {
   const { t } = useTranslation();
 
   useEffect(() => {
-    const authValue = JSON.parse(window.localStorage.getItem('auth') || '{}');
+    try {
+      const authValue = JSON.parse(window.localStorage.getItem('auth') || '{}');
 
-    if (authValue && authValue.id) {
-      setIsAuthenticated(true);
-      setAuthUser(authValue);
-    }
+      if (authValue && authValue.id) {
+        setIsAuthenticated(true);
+        setAuthUser(authValue);
+      }
+    } catch (e) {}
   }, []);
 
   // useEffect(() => {
