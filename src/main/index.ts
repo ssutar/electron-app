@@ -18,8 +18,8 @@ function createWindow(): void {
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
-    }
+      sandbox: false,
+    },
   });
 
   mainWindow.on('ready-to-show', () => {
@@ -66,7 +66,7 @@ app.whenReady().then(() => {
       {
         printBackground: true,
         copies: 1,
-        landscape: true
+        landscape: true,
       },
       (success, _error) => {
         if (success) {
@@ -74,7 +74,7 @@ app.whenReady().then(() => {
         } else {
           console.log('failed');
         }
-      }
+      },
     );
   });
 
@@ -87,7 +87,7 @@ app.whenReady().then(() => {
   ipcMain.handle('getAllUpdates', (_, teacherId) => {
     // SELECT u.*, s.title as subject, t.name as teacherName FROM Updates u JOIN Subjects s ON (u.subjectId = s.id) JOIN Teachers t ON (u.teacherId = t.id) WHERE u.teacherId = '1'
     const stmt = db.prepare(
-      'SELECT u.*, s.title as subject FROM Updates u JOIN Subjects s ON (u.subjectId = s.id) WHERE u.teacherId = @teacherId'
+      'SELECT u.*, s.title as subject FROM Updates u JOIN Subjects s ON (u.subjectId = s.id) WHERE u.teacherId = @teacherId',
     );
     const result = stmt.all({ teacherId });
     return result;
@@ -95,7 +95,7 @@ app.whenReady().then(() => {
 
   ipcMain.handle('searchUpdates', (_, { subjectId, teacherId, grade }) => {
     const stmt = db.prepare(
-      'SELECT * FROM Updates WHERE teacherId = @teacherId AND subjectId = @subjectId AND grade = @grade'
+      'SELECT * FROM Updates WHERE teacherId = @teacherId AND subjectId = @subjectId AND grade = @grade',
     );
     const result = stmt.all({ teacherId, subjectId, grade });
     return result;
@@ -115,8 +115,8 @@ app.whenReady().then(() => {
 
   ipcMain.handle('insertUpdate', (_, update) => {
     const stmt = db.prepare(`INSERT INTO Updates
-      (teacherId, grade, subject, teachingMethod, teachingAid, boardWork, objectives, teacherProcedure, studentProcedure, onlineMedium, homeWork)
-      VALUES (@teacherId, @grade, @subject, @teachingMethod, @teachingAid, @boardWork, @objectives, @teacherProcedure, @studentProcedure, @onlineMedium, @homeWork);
+      (teacherId, grade, subjectId, teachingMethod, teachingAid, boardWork, objectives, teacherProcedure, studentProcedure, onlineMedium, homeWork)
+      VALUES (@teacherId, @grade, @subjectId, @teachingMethod, @teachingAid, @boardWork, @objectives, @teacherProcedure, @studentProcedure, @onlineMedium, @homeWork);
     `);
     return stmt.run(update);
   });

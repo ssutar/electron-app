@@ -6,15 +6,6 @@ module.exports = {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
-    fontFamily: {
-      satoshi: ['Satoshi', 'sans-serif']
-    },
-    screens: {
-      '2xsm': '375px',
-      xsm: '425px',
-      '3xl': '2000px',
-      ...defaultTheme.screens
-    },
     extend: {
       colors: {
         current: 'currentColor',
@@ -23,11 +14,11 @@ module.exports = {
         black: {
           ...colors.black,
           DEFAULT: '#1C2434',
-          2: '#010101'
+          2: '#010101',
         },
         red: {
           ...colors.red,
-          DEFAULT: '#FB5454'
+          DEFAULT: '#FB5454',
         },
         body: '#64748B',
         bodydark: '#AEB7C0',
@@ -40,7 +31,7 @@ module.exports = {
           ...colors.gray,
           DEFAULT: '#EFF4FB',
           2: '#F7F9FC',
-          3: '#FAFAFA'
+          3: '#FAFAFA',
         },
         graydark: '#333A48',
         whiten: '#F1F5F9',
@@ -60,11 +51,11 @@ module.exports = {
           7: '#FF6766',
           8: '#F0950C',
           9: '#E5E7EB',
-          10: '#0FADCF'
+          10: '#0FADCF',
         },
         success: '#219653',
         danger: '#D34053',
-        warning: '#FFA70B'
+        warning: '#FFA70B',
       },
       fontSize: {
         'title-xxl': ['44px', '55px'],
@@ -74,7 +65,7 @@ module.exports = {
         'title-md': ['24px', '30px'],
         'title-md2': ['26px', '30px'],
         'title-sm': ['20px', '26px'],
-        'title-xsm': ['18px', '24px']
+        'title-xsm': ['18px', '24px'],
       },
       spacing: {
         4.5: '1.125rem',
@@ -160,7 +151,7 @@ module.exports = {
         187.5: '46.875rem',
         203: '50.75rem',
         230: '57.5rem',
-        242.5: '60.625rem'
+        242.5: '60.625rem',
       },
       maxWidth: {
         2.5: '0.625rem',
@@ -192,20 +183,20 @@ module.exports = {
         242.5: '60.625rem',
         270: '67.5rem',
         280: '70rem',
-        292.5: '73.125rem'
+        292.5: '73.125rem',
       },
       maxHeight: {
         35: '8.75rem',
         70: '17.5rem',
         90: '22.5rem',
         550: '34.375rem',
-        300: '18.75rem'
+        300: '18.75rem',
       },
       minWidth: {
         22.5: '5.625rem',
         42.5: '10.625rem',
         47.5: '11.875rem',
-        75: '18.75rem'
+        75: '18.75rem',
       },
       zIndex: {
         999999: '999999',
@@ -214,20 +205,20 @@ module.exports = {
         999: '999',
         99: '99',
         9: '9',
-        1: '1'
+        1: '1',
       },
       opacity: {
-        65: '.65'
+        65: '.65',
       },
       backgroundImage: {
-        video: "url('../images/video/video.png')"
+        video: "url('../images/video/video.png')",
       },
       content: {
-        'icon-copy': 'url("../images/icon/icon-copy-alt.svg")'
+        'icon-copy': 'url("../images/icon/icon-copy-alt.svg")',
       },
       transitionProperty: { width: 'width', stroke: 'stroke' },
       borderWidth: {
-        6: '6px'
+        6: '6px',
       },
       boxShadow: {
         default: '0px 8px 13px -3px rgba(0, 0, 0, 0.07)',
@@ -243,26 +234,26 @@ module.exports = {
         5: '0px 1px 1px rgba(0, 0, 0, 0.15)',
         6: '0px 3px 15px rgba(0, 0, 0, 0.1)',
         7: '-5px 0 0 #313D4A, 5px 0 0 #313D4A',
-        8: '1px 0 0 #313D4A, -1px 0 0 #313D4A, 0 1px 0 #313D4A, 0 -1px 0 #313D4A, 0 3px 13px rgb(0 0 0 / 8%)'
+        8: '1px 0 0 #313D4A, -1px 0 0 #313D4A, 0 1px 0 #313D4A, 0 -1px 0 #313D4A, 0 3px 13px rgb(0 0 0 / 8%)',
       },
       dropShadow: {
         1: '0px 1px 0px #E2E8F0',
-        2: '0px 1px 4px rgba(0, 0, 0, 0.12)'
+        2: '0px 1px 4px rgba(0, 0, 0, 0.12)',
       },
       keyframes: {
         rotating: {
           '0%, 100%': { transform: 'rotate(360deg)' },
-          '50%': { transform: 'rotate(0deg)' }
-        }
+          '50%': { transform: 'rotate(0deg)' },
+        },
       },
       animation: {
         'ping-once': 'ping 5s cubic-bezier(0, 0, 0.2, 1)',
         rotating: 'rotating 30s linear infinite',
         'spin-1.5': 'spin 1.5s linear infinite',
         'spin-2': 'spin 2s linear infinite',
-        'spin-3': 'spin 3s linear infinite'
-      }
-    }
+        'spin-3': 'spin 3s linear infinite',
+      },
+    },
   },
-  plugins: []
+  plugins: [],
 };

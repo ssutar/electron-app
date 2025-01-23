@@ -1,177 +1,234 @@
-import { ISubject, IUpdateFormData } from '@interfaces/models';
-import { useTranslation } from 'react-i18next';
+import { IUpdateFormData } from '@interfaces/models';
+import { Trans, useTranslation } from 'react-i18next';
 import { useAuth } from '../AuthContext';
 import { useForm } from 'react-hook-form';
-import { useEffect, useState } from 'react';
+import { Select } from '../UI/Select';
+import { Input } from '../UI/Input';
+import { Button } from '../UI/Button';
+import { Card } from '../UI/Card';
+import { useSubjects } from '@renderer/hooks/useSubjects';
+import { useMutation } from '@tanstack/react-query';
+import { Link } from 'react-router-dom';
 
 export type UpdateFormProps = {
   onSuccess: () => void;
 };
 
 export const UpdateForm = ({ onSuccess }: UpdateFormProps) => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<IUpdateFormData>();
+  const { control, handleSubmit, reset: resetForm } = useForm<IUpdateFormData>();
   const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { t } = useTranslation();
   const { authUser } = useAuth();
-  const [subjects, setSubjects] = useState<ISubject[]>([]);
+  const { subjects } = useSubjects();
+
+  const {
+    mutateAsync,
+    isPending,
+    isError,
+    isSuccess,
+    reset: resetMutation,
+  } = useMutation({
+    mutationFn: (data: IUpdateFormData) => {
+      if (authUser?.id) {
+        data.teacherId = authUser.id;
+      }
+      return window.api.insertUpdate(data);
+    },
+    onError: (error) => {
+      console.log(error);
+    },
+    onSuccess: () => {
+      resetForm();
+    },
+  });
 
   const onUpdateSubmit = (data: IUpdateFormData) => {
-    if (authUser?.id) {
-      data.teacherId = authUser.id;
-    }
-
-    window.api.insertUpdate(data).then(onSuccess);
+    resetMutation();
+    return mutateAsync(data);
   };
 
-  useEffect(() => {
-    if (authUser?.id) {
-      window.api.getAllSubjects(authUser.id).then(setSubjects);
-    }
-  }, []);
-
   return (
-    <form style={{ padding: '2rem' }} onSubmit={handleSubmit(onUpdateSubmit)}>
-      <fieldset>
-        <div className="grid">
-          <label>
-            {t('addUpdateForm.grade')}
-            <select
-              {...register('grade', { required: true })}
-              aria-label={t('addUpdateForm.selectGrade')}
-              defaultValue={t('addUpdateForm.selectGrade')}
-              aria-invalid={errors.grade ? 'true' : 'false'}
-            >
-              {/* <option selected disabled value="">
-                {t('addUpdateForm.selectGrade')}
-              </option> */}
-              {grades.map((grade) => (
-                <option key={grade} value={grade}>
-                  {' '}
-                  {grade}{' '}
-                </option>
-              ))}
-            </select>
-            {errors.grade && <small>{t('addUpdateForm.errors.grade.required')}</small>}
-          </label>
-          <label>
-            {t('addUpdateForm.subject')}
-            <select
-              {...register('subjectId', { required: true })}
-              aria-invalid={errors.subjectId ? 'true' : 'false'}
-            >
-              {subjects.map((subject) => {
-                return (
-                  <option value={subject.id} key={subject.id}>
-                    {subject.title}
-                  </option>
-                );
-              })}
-            </select>
-            {errors.subjectId && <small>{t('addUpdateForm.errors.subject.required')}</small>}
-          </label>
+    <Card>
+      <form onSubmit={handleSubmit(onUpdateSubmit)}>
+        <div className="mb-4">
+          <Select
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+              validate: (value) => value > 0,
+            }}
+            name="grade"
+            defaultValue=""
+            errorMessage={t('addUpdateForm.errors.grade.required')}
+            label={t('addUpdateForm.selectGrade')}
+            options={grades.map((g) => ({
+              value: g,
+              label: g,
+            }))}
+            placeholder="Select your grade"
+          />
         </div>
-        <div className="grid">
-          <label>
-            {t('addUpdateForm.teachingMethod')}
-            <textarea
-              {...register('teachingMethod', { required: true })}
-              placeholder={t('addUpdateForm.teachingMethod')}
-              aria-invalid={errors.teachingMethod ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.teachingMethod && (
-              <small>{t('addUpdateForm.errors.teachingMethod.required')}</small>
-            )}
-          </label>
-          <label>
-            {t('addUpdateForm.teachingAid')}
-            <textarea
-              {...register('teachingAid', { required: true })}
-              placeholder={t('addUpdateForm.teachingAid')}
-              aria-invalid={errors.teachingAid ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.teachingAid && <small>{t('addUpdateForm.errors.teachingAid.required')}</small>}
-          </label>
+        <div className="mb-4">
+          <Select
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+              validate: (value) => value > 0,
+            }}
+            name="subjectId"
+            defaultValue=""
+            errorMessage={t('addUpdateForm.errors.subject.required')}
+            label={t('addUpdateForm.subject')}
+            options={subjects.map((sub, index) => ({
+              value: sub.id || index,
+              label: sub.title,
+            }))}
+            placeholder="Select your subject"
+          />
         </div>
-        <div className="grid">
-          <label>
-            {t('addUpdateForm.boardWork')}
-            <textarea
-              {...register('boardWork', { required: true })}
-              placeholder={t('addUpdateForm.boardWork')}
-              aria-invalid={errors.boardWork ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.boardWork && <small>{t('addUpdateForm.errors.boardWork.required')}</small>}
-          </label>
-          <label>
-            {t('addUpdateForm.objectives')}
-            <textarea
-              {...register('objectives', { required: true })}
-              placeholder={t('addUpdateForm.objectives')}
-              aria-invalid={errors.objectives ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.objectives && <small>{t('addUpdateForm.errors.objectives.required')}</small>}
-          </label>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="teachingMethod"
+            errorMessage={t('addUpdateForm.errors.teachingMethod.required')}
+            label={t('addUpdateForm.teachingMethod')}
+            placeholder={t('addUpdateForm.teachingMethod')}
+            rows={3}
+          />
         </div>
-        <div className="grid">
-          <label>
-            {t('addUpdateForm.teacherProcedure')}
-            <textarea
-              {...register('teacherProcedure', { required: true })}
-              placeholder={t('addUpdateForm.teacherProcedure')}
-              aria-invalid={errors.teacherProcedure ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.teacherProcedure && (
-              <small>{t('addUpdateForm.errors.teacherProcedure.required')}</small>
-            )}
-          </label>
-          <label>
-            {t('addUpdateForm.studentProcedure')}
-            <textarea
-              {...register('studentProcedure', { required: true })}
-              placeholder={t('addUpdateForm.studentProcedure')}
-              aria-invalid={errors.studentProcedure ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.studentProcedure && (
-              <small>{t('addUpdateForm.errors.studentProcedure.required')}</small>
-            )}
-          </label>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="teachingAid"
+            errorMessage={t('addUpdateForm.errors.teachingAid.required')}
+            label={t('addUpdateForm.teachingAid')}
+            placeholder={t('addUpdateForm.teachingAid')}
+            rows={3}
+          />
         </div>
-        <div className="grid">
-          <label>
-            {t('addUpdateForm.onlineMedium')}
-            <textarea
-              {...register('onlineMedium', { required: true })}
-              placeholder={t('addUpdateForm.onlineMedium')}
-              aria-invalid={errors.onlineMedium ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.onlineMedium && (
-              <small>{t('addUpdateForm.errors.onlineMedium.required')}</small>
-            )}
-          </label>
-          <label>
-            {t('addUpdateForm.homeWork')}
-            <textarea
-              {...register('homeWork', { required: true })}
-              placeholder={t('addUpdateForm.homeWork')}
-              aria-invalid={errors.homeWork ? 'true' : 'false'}
-              rows={3}
-            />
-            {errors.homeWork && <small>{t('addUpdateForm.errors.homeWork.required')}</small>}
-          </label>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="boardWork"
+            errorMessage={t('addUpdateForm.errors.boardWork.required')}
+            label={t('addUpdateForm.boardWork')}
+            placeholder={t('addUpdateForm.boardWork')}
+            rows={3}
+          />
         </div>
-      </fieldset>
-      <button type="submit">{t('addUpdateForm.save')}</button>
-    </form>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="objectives"
+            errorMessage={t('addUpdateForm.errors.objectives.required')}
+            label={t('addUpdateForm.objectives')}
+            placeholder={t('addUpdateForm.objectives')}
+            rows={3}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="teacherProcedure"
+            errorMessage={t('addUpdateForm.errors.teacherProcedure.required')}
+            label={t('addUpdateForm.teacherProcedure')}
+            placeholder={t('addUpdateForm.teacherProcedure')}
+            rows={3}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="studentProcedure"
+            errorMessage={t('addUpdateForm.errors.studentProcedure.required')}
+            label={t('addUpdateForm.studentProcedure')}
+            placeholder={t('addUpdateForm.studentProcedure')}
+            rows={3}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="onlineMedium"
+            errorMessage={t('addUpdateForm.errors.onlineMedium.required')}
+            label={t('addUpdateForm.onlineMedium')}
+            placeholder={t('addUpdateForm.onlineMedium')}
+            rows={3}
+          />
+        </div>
+        <div className="mb-4">
+          <Input
+            // @ts-expect-error
+            control={control}
+            rules={{
+              required: true,
+            }}
+            defaultValue=""
+            name="homeWork"
+            errorMessage={t('addUpdateForm.errors.homeWork.required')}
+            label={t('addUpdateForm.homeWork')}
+            placeholder={t('addUpdateForm.homeWork')}
+            rows={3}
+          />
+        </div>
+        {isError && (
+          <p className="text-danger mb-4">{'Something went wrong, please try again later'}</p>
+        )}
+        {isSuccess && (
+          <p className="text-success mb-4">
+            <Trans i18nKey={'addUpdateForm.root.success'}>
+              Update inserted successfully,{' '}
+              <Link className="text-primary" to="/dashboard">
+                go to dashboard
+              </Link>
+            </Trans>
+          </p>
+        )}
+        <Button
+          disabled={isPending}
+          isFullWidth={true}
+          size={'lg'}
+          type="submit"
+          label={t('addUpdateForm.save')}
+        ></Button>
+      </form>
+    </Card>
   );
 };

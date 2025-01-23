@@ -1,21 +1,21 @@
 export default {
   translation: {
     global: {
-      appName: 'TeacherUp'
+      appName: 'TeacherUp',
     },
     homePage: {
       title: 'Daily updates',
-      print: 'Print'
+      print: 'Print',
     },
     updatesPage: {
-      title: 'All updates'
+      title: 'All updates',
     },
     dateForm: {
       date: 'Date',
       day: 'Day',
       month: 'Month',
       goodThought: 'Good thought',
-      daySpecial: 'Day special'
+      daySpecial: 'Day special',
     },
     dailyRegisterTable: {
       columns: {
@@ -29,8 +29,8 @@ export default {
         teacherProcedure: 'Teacher procedure',
         studentProcedure: 'Student procedure',
         onlineMedium: 'Online medium',
-        homeWork: 'Home work'
-      }
+        homeWork: 'Home work',
+      },
     },
     updatesTable: {
       columns: {
@@ -43,16 +43,16 @@ export default {
         teacherProcedure: 'Teacher procedure',
         studentProcedure: 'Student procedure',
         onlineMedium: 'Online medium',
-        homeWork: 'Home work'
-      }
+        homeWork: 'Home work',
+      },
     },
     linkDailyUpdateFormDialog: {
       title: 'Link the daily updates',
-      add: 'Link daily updates'
+      add: 'Add daily updates for the date {{date}}',
     },
     addUpdateFormDialog: {
       title: 'Enter the updates',
-      add: 'Add updates'
+      add: 'Add updates',
     },
     addUpdateForm: {
       date: 'Date',
@@ -70,38 +70,41 @@ export default {
       onlineMedium: 'Online medium',
       homeWork: 'Home work',
       save: 'Save',
+      root: {
+        success: 'Update inserted successfully, <2>go to dashboard</2>',
+      },
       errors: {
         grade: {
-          required: 'Please select a valid grade'
+          required: 'Please select a valid grade',
         },
         subject: {
-          required: 'Please select a valid subject'
+          required: 'Please select a valid subject',
         },
         teachingMethod: {
-          required: 'Please enter a valid teaching method'
+          required: 'Please enter a valid teaching method',
         },
         teachingAid: {
-          required: 'Please enter a valid teaching aid'
+          required: 'Please enter a valid teaching aid',
         },
         boardWork: {
-          required: 'Please enter a valid board work'
+          required: 'Please enter a valid board work',
         },
         objectives: {
-          required: 'Please enter a valid objectives'
+          required: 'Please enter a valid objectives',
         },
         teacherProcedure: {
-          required: 'Please enter a valid teacher procedure'
+          required: 'Please enter a valid teacher procedure',
         },
         studentProcedure: {
-          required: 'Please enter a valid student procedure'
+          required: 'Please enter a valid student procedure',
         },
         onlineMedium: {
-          required: 'Please enter a valid online medium'
+          required: 'Please enter a valid online medium',
         },
         homeWork: {
-          required: 'Please enter a valid home work'
-        }
-      }
+          required: 'Please enter a valid home work',
+        },
+      },
     },
 
     linkDailyUpdateForm: {
@@ -124,36 +127,36 @@ export default {
       search: 'Search',
       errors: {
         grade: {
-          required: 'Please select a valid grade'
+          required: 'Please select a valid grade',
         },
         subject: {
-          required: 'Please select a valid subject'
+          required: 'Please select a valid subject',
         },
         teachingMethod: {
-          required: 'Please enter a valid teaching method'
+          required: 'Please enter a valid teaching method',
         },
         teachingAid: {
-          required: 'Please enter a valid teaching aid'
+          required: 'Please enter a valid teaching aid',
         },
         boardWork: {
-          required: 'Please enter a valid board work'
+          required: 'Please enter a valid board work',
         },
         objectives: {
-          required: 'Please enter a valid objectives'
+          required: 'Please enter a valid objectives',
         },
         teacherProcedure: {
-          required: 'Please enter a valid teacher procedure'
+          required: 'Please enter a valid teacher procedure',
         },
         studentProcedure: {
-          required: 'Please enter a valid student procedure'
+          required: 'Please enter a valid student procedure',
         },
         onlineMedium: {
-          required: 'Please enter a valid online medium'
+          required: 'Please enter a valid online medium',
         },
         homeWork: {
-          required: 'Please enter a valid home work'
-        }
-      }
+          required: 'Please enter a valid home work',
+        },
+      },
     },
 
     loginForm: {
@@ -165,15 +168,19 @@ export default {
       signup: 'Signup',
       errors: {
         email: {
-          required: 'Please enter a valid email'
+          required: 'Please enter a valid email',
         },
         password: {
-          required: 'Please enter a valid password'
-        }
-      }
+          required: 'Please enter a valid password',
+        },
+        root: {
+          invalid: 'Invalid combination of email and password, please try again',
+        },
+      },
     },
     signupForm: {
       title: 'SignUp to TeacherUp',
+      subtitle: 'Start for free',
       email: 'Email',
       name: 'Name',
       password: 'Password',
@@ -183,22 +190,26 @@ export default {
       signup: 'Signup',
       loginText: 'Already have an account?',
       login: 'Login',
-      success: 'Account created successfully. An email has been sent to the provided email address',
+      root: {
+        success:
+          'Account created successfully. An email has been sent to the provided email address',
+      },
+
       errors: {
         email: {
-          required: 'Please enter a valid email'
+          required: 'Please enter a valid email',
         },
         school: {
-          required: 'Please enter a valid school'
+          required: 'Please enter a valid school',
         },
         name: {
-          required: 'Please enter a valid name'
+          required: 'Please enter a valid name',
         },
         password: {
           required: 'Please enter a valid password',
-          shouldMatch: 'The passwords should match'
-        }
-      }
-    }
-  }
+          shouldMatch: 'The passwords should match',
+        },
+      },
+    },
+  },
 };

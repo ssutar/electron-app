@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAuth } from './AuthContext';
+import { useAuth } from '../components/AuthContext';
 import { Navigate } from 'react-router-dom';
 
-export const Home = () => {
+export const HomePage = () => {
   const { isAuthenticated } = useAuth();
 
   return isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />;

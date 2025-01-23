@@ -1,31 +1,33 @@
-import { DailyRegister } from './components/DailyRegister';
 import { MemoryRouter as Router, Routes, Route } from 'react-router-dom';
-import { LoginForm, SignupForm } from './components/Login';
 import { AuthContextProvider } from './components/AuthContext';
 import { RequireAuth } from './components/RequireAuth';
-import { StatusPage } from './components/StatusPage';
-import { Home } from './components/Home';
-import { Updates } from './components/Updates';
-import DefaultLayout from './components/layout/DefaultLayout';
-import { LoginPage } from './pages/LoginPage';
-import { SignUpPage } from './pages/SignUpPage';
+import { Updates, DailyUpdatesPage, LoginPage, SignUpPage, StatusPage, HomePage } from './pages';
+import { AddUpdatesPage } from './pages/AddUpdatesPage';
+import { LinkDailyUpdatesPage } from './pages/LinkDailyUpdatesPage';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
-    <Router>
-      <AuthContextProvider>
-        <Routes>
-          <Route path="/dashboard" element={<RequireAuth />}>
-            <Route index element={<DailyRegister />} />
-            <Route path="updates" element={<Updates />} />
-          </Route>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/status" element={<StatusPage />} />
-          <Route path="/" element={<Home />} />
-        </Routes>
-      </AuthContextProvider>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+        <AuthContextProvider>
+          <Routes>
+            <Route path="/dashboard" element={<RequireAuth />}>
+              <Route index element={<Updates />} />
+              <Route path="daily-updates" element={<DailyUpdatesPage />} />
+              <Route path="add-updates" element={<AddUpdatesPage />} />
+              <Route path="link-daily-updates" element={<LinkDailyUpdatesPage />} />
+            </Route>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/signup" element={<SignUpPage />} />
+            <Route path="/status" element={<StatusPage />} />
+            <Route path="/" element={<HomePage />} />
+          </Routes>
+        </AuthContextProvider>
+      </Router>
+    </QueryClientProvider>
   );
 }
 

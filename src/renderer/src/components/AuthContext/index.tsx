@@ -46,12 +46,17 @@ export const AuthContextProvider = ({ children }) => {
 
   const signup = (data: ISignupFormData) => {
     window.api.signup(data).then(() => {
-      navigate('/status', { state: { message: t('signupForm.success') } });
+      navigate('/status', { state: { message: t('signupForm.root.success') } });
     });
   };
 
   const login = async (data: ILoginFormData) => {
     const teacherData = await window.api.login(data);
+    if (!teacherData) {
+      throw new Error('User not found', {
+        cause: 404
+      });
+    }
     window.localStorage.setItem('auth', JSON.stringify(teacherData));
     setIsAuthenticated(true);
     setAuthUser(teacherData);

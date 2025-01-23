@@ -9,6 +9,24 @@ const startScripts = [
     );
   `,
   `
+    CREATE TABLE IF NOT EXISTS Teachers (
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      name TEXT,
+      schoolId INTEGER NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      password TEXT,
+      CONSTRAINT Teachers_Schools_FK FOREIGN KEY (schoolId) REFERENCES Schools(id)
+    );
+  `,
+  `
+    CREATE TABLE IF NOT EXISTS Subjects (
+      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      teacherId INTEGER NOT NULL,
+      CONSTRAINT Subjects_Teachers_FK FOREIGN KEY (teacherId) REFERENCES Teachers(id)
+    );
+  `,
+  `
     CREATE TABLE IF NOT EXISTS Updates (
       id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
       teacherId INTEGER NOT NULL,
@@ -25,16 +43,6 @@ const startScripts = [
       subjectId INTEGER NOT NULL,
       CONSTRAINT DailyUpdates_Teachers_FK FOREIGN KEY (teacherId) REFERENCES Teachers(id),
       CONSTRAINT Updates_Subjects_FK FOREIGN KEY (subjectId) REFERENCES Subjects(id)
-    );
-  `,
-  `
-    CREATE TABLE IF NOT EXISTS Teachers (
-      id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      name TEXT,
-      schoolId INTEGER NOT NULL,
-      email TEXT UNIQUE NOT NULL,
-      password TEXT,
-      CONSTRAINT Teachers_Schools_FK FOREIGN KEY (schoolId) REFERENCES Schools(id)
     );
   `,
   `

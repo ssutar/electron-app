@@ -146,12 +146,12 @@
 
 /* third-party libraries CSS */
 
-.tableCheckbox:checked ~ div span {
+/* .tableCheckbox:checked ~ div span {
   @apply opacity-100;
 }
 .tableCheckbox:checked ~ div {
   @apply bg-primary border-primary;
-}
+} */
 
 /* .apexcharts-legend-text {
   @apply !text-body dark:!text-bodydark;
@@ -194,7 +194,7 @@
   @apply !pl-1.5;
 } */
 
-.flatpickr-wrapper {
+/* .flatpickr-wrapper {
   @apply w-full;
 }
 .flatpickr-months .flatpickr-prev-month:hover svg,
@@ -208,7 +208,7 @@
   @apply dark:!border-b-boxdark;
 }
 .flatpickr-calendar {
-  @apply !p-6 dark:!bg-boxdark dark:!text-bodydark dark:!shadow-8 2xsm:!w-auto;
+  @apply !p-6 dark:!bg-boxdark dark:!text-bodydark dark:!shadow-8;
 }
 .flatpickr-day {
   @apply dark:!text-bodydark dark:hover:!border-meta-4 dark:hover:!bg-meta-4;
@@ -280,7 +280,7 @@ span.flatpickr-weekday,
 .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
   box-shadow: -10px 0 0 #3c50e0;
-}
+} */
 
 /* .map-btn .jvm-zoom-btn {
   @apply flex items-center justify-center w-7.5 h-7.5 rounded border border-stroke dark:border-strokedark hover:border-primary dark:hover:border-primary bg-white hover:bg-primary text-body hover:text-white dark:text-bodydark dark:hover:text-white text-2xl leading-none px-0 pt-0 pb-0.5;
@@ -331,8 +331,8 @@ span.flatpickr-weekday,
 }
 
 main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center; */
+  /* height: 100vh; */
 }

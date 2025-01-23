@@ -1,22 +1,23 @@
 import { Link } from 'react-router-dom';
 interface BreadcrumbProps {
-  pageName: string;
+  title: string;
+  className?: string;
 }
-const Breadcrumb = ({ pageName }: BreadcrumbProps) => {
+const Breadcrumb = ({ title, className }: BreadcrumbProps) => {
   return (
-    <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-      <h2 className="text-title-md2 font-semibold text-black dark:text-white">
-        {pageName}
-      </h2>
+    <div
+      className={`mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between ${className}`}
+    >
+      <h2 className="text-title-md2 font-semibold text-black dark:text-white">{title}</h2>
 
-      <nav>
+      <nav className="hidden md:block">
         <ol className="flex items-center gap-2">
           <li>
-            <Link className="font-medium" to="/">
+            <Link className="font-medium" to="/dashboard">
               Dashboard /
             </Link>
           </li>
-          <li className="font-medium text-primary">{pageName}</li>
+          <li className="font-medium text-primary">{title}</li>
         </ol>
       </nav>
     </div>
