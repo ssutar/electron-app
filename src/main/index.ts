@@ -121,6 +121,14 @@ app.whenReady().then(() => {
     return stmt.run(update);
   });
 
+  ipcMain.handle('linkUpdate', (_, linkUpdateFormData) => {
+    const stmt = db.prepare(`INSERT INTO DailyUpdates
+      (date, period, updateId)
+      VALUES(@date, @period, @updateId);
+    `);
+    return stmt.run(linkUpdateFormData);
+  });
+
   ipcMain.handle('signup', (_, signupFormData) => {
     const stmt = db.prepare(`INSERT INTO Teachers
       (name, schoolId, email, password)

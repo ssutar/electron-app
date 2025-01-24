@@ -2,12 +2,13 @@ import { contextBridge, ipcRenderer } from 'electron';
 import { electronAPI } from '@electron-toolkit/preload';
 import type {
   ILinkDailyUpdateFormData,
+  ILinkDailyUpdateSearchFormData,
   ILoginFormData,
   ISchool,
   ISignupFormData,
   ISubject,
   IUpdate,
-  IUpdateFormData
+  IUpdateFormData,
 } from '../interfaces';
 
 // Custom APIs for renderer
@@ -39,9 +40,12 @@ export const api = {
   login: (loginFormData: ILoginFormData) => {
     return ipcRenderer.invoke('login', loginFormData);
   },
-  searchUpdates: (params: ILinkDailyUpdateFormData) => {
+  searchUpdates: (params: ILinkDailyUpdateSearchFormData) => {
     return ipcRenderer.invoke('searchUpdates', params);
-  }
+  },
+  linkUpdate: (linkUpdateFormData: ILinkDailyUpdateFormData) => {
+    return ipcRenderer.invoke('linkUpdate', linkUpdateFormData);
+  },
 };
 
 // Use `contextBridge` APIs to expose Electron APIs to

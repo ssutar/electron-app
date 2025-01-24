@@ -63,8 +63,14 @@ export interface ISubject {
   teacherId: string;
 }
 
-export interface ILinkDailyUpdateFormData {
+export interface ILinkDailyUpdateSearchFormData {
   grade: string;
   subjectId: string;
   teacherId: string;
+}
+
+export interface ILinkDailyUpdateFormData {
+  date: string;
+  updateId: string;
+  period: string;
 }
