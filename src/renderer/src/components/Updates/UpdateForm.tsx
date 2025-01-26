@@ -10,11 +10,7 @@ import { useSubjects } from '@renderer/hooks/useSubjects';
 import { useMutation } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 
-export type UpdateFormProps = {
-  onSuccess: () => void;
-};
-
-export const UpdateForm = ({ onSuccess }: UpdateFormProps) => {
+export const UpdateForm = () => {
   const { control, handleSubmit, reset: resetForm } = useForm<IUpdateFormData>();
   const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { t } = useTranslation();

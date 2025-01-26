@@ -3,42 +3,54 @@ import { Input } from '../UI/Input';
 import { useForm } from 'react-hook-form';
 import { Button } from '../UI/Button';
 import { Card } from '../UI/Card';
+import { formatDateYYYYMMDD } from '@renderer/utils/date';
+import { useMemo } from 'react';
 
 export type DateInputFormProps = {
   currentDate: Date;
+  isDisabled: boolean;
   onDateChange: (dateValue: Date) => void;
 };
 
-export const DateInputForm = ({ currentDate, onDateChange }: DateInputFormProps) => {
+export interface IDateInputFormData {
+  registerDate: string;
+}
+
+export const DateInputForm = ({ currentDate, onDateChange, isDisabled }: DateInputFormProps) => {
   const { t } = useTranslation();
+  const { control, handleSubmit } = useForm<IDateInputFormData>();
+  const currentDateString = useMemo(() => formatDateYYYYMMDD(currentDate), [currentDate]);
 
-  const { control, handleSubmit } = useForm();
-
-  const currentDateString = [
-    currentDate.getFullYear(),
-    ('0' + (currentDate.getMonth() + 1)).slice(-2),
-    ('0' + currentDate.getDate()).slice(-2)
-  ].join('-');
-
-  const onDateSubmit = (data) => {
+  const onDateSubmit = (data: IDateInputFormData) => {
     onDateChange(new Date(data.registerDate));
   };
 
   return (
-    <Card title={'Select the date and serach for daily updates'}>
+    <Card title={t('dateInputForm.title')}>
       <form onSubmit={handleSubmit(onDateSubmit)}>
-        <div className="flex gap-2 justify-between flex-col md:flex-row md:gap-6">
+        <div className="flex gap-6 justify-between flex-col md:flex-row">
           <div className="flex flex-1 items-center gap-6">
             <Input
+              // @ts-expect-error
               control={control}
-              label={t('dateForm.date')}
+              label={t('dateInputForm.date')}
               htmlType="date"
               name="registerDate"
               defaultValue={currentDateString}
+              rules={{
+                required: true,
+              }}
+              errorMessage={t('dateInputForm.errors.date.required')}
             />
           </div>
           <div>
-            <Button size="lg" htmlType="submit" label="Search" isFullWidth={true} />
+            <Button
+              disabled={isDisabled}
+              size="lg"
+              htmlType="submit"
+              label={t('dateInputForm.search')}
+              isFullWidth={true}
+            />
           </div>
         </div>
       </form>

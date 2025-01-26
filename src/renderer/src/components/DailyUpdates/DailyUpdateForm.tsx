@@ -1,19 +1,18 @@
-import { ILinkDailyUpdateSearchFormData, IUpdate } from '@interfaces/models';
+import { ILinkDailyUpdateSearchFormData } from '@interfaces/models';
 import { useTranslation } from 'react-i18next';
 import { Select } from '../UI/Select';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '../UI/Button';
-import { UpdatesTable } from '../Updates/UpdatesTable';
 import { Card } from '../UI/Card';
 import { useSubjects } from '@renderer/hooks/useSubjects';
 import { useQuery } from '@tanstack/react-query';
-import { Spinner } from '../UI/Spinner';
 import { useAuth } from '../AuthContext';
 import { DailyUpdateLinkForm } from './DailyUpdateLinkForm';
+import { BlockLoader } from '@renderer/components/UI/Loaders';
 
 export type DailyUpdateFormProps = {
-  date?: string;
+  date: string;
 };
 
 export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
@@ -48,7 +47,7 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
 
   return (
     <>
-      <Card title={'Please select the grade and subject to search'}>
+      <Card title={t('dailyUpdateSearchForm.title')}>
         <form onSubmit={handleSubmit(onSearch)}>
           <div className="mb-4">
             <Select
@@ -60,13 +59,13 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
               }}
               name="grade"
               defaultValue=""
-              errorMessage={t('addUpdateForm.errors.grade.required')}
-              label={t('addUpdateForm.selectGrade')}
+              errorMessage={t('dailyUpdateSearchForm.errors.grade.required')}
+              label={t('dailyUpdateSearchForm.grade')}
               options={grades.map((g) => ({
                 value: g,
                 label: g,
               }))}
-              placeholder="Select your grade"
+              placeholder={t('dailyUpdateSearchForm.selectGrade')}
             />
           </div>
 
@@ -80,13 +79,13 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
               }}
               name="subjectId"
               defaultValue=""
-              errorMessage={t('addUpdateForm.errors.subject.required')}
-              label={t('addUpdateForm.subject')}
+              errorMessage={t('dailyUpdateSearchForm.errors.subject.required')}
+              label={t('dailyUpdateSearchForm.subject')}
               options={subjects.map((sub, index) => ({
                 value: sub.id || index,
                 label: sub.title,
               }))}
-              placeholder="Select your subject"
+              placeholder={t('dailyUpdateSearchForm.selectSubject')}
             />
           </div>
           <Button
@@ -98,20 +97,10 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
           />
         </form>
       </Card>
-      <Card
-        isHidden={isPending}
-        title={isError ? '' : 'Please selet the update from the table and period'}
-      >
-        {isError && (
-          <p className="text-danger mb-4">{'Something went wrong, please try again later'}</p>
-        )}
-        {isLoading && (
-          <div className="grid place-items-center p-4 gap-4">
-            <Spinner />
-            <p>{'Loading...'}</p>
-          </div>
-        )}
-        {isSuccess && <DailyUpdateLinkForm updates={updates} />}
+      <Card isHidden={isPending} title={isError ? '' : t('linkDailyUpdateForm.title')}>
+        {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.error')}</p>}
+        {isLoading && <BlockLoader />}
+        {isSuccess && <DailyUpdateLinkForm updates={updates} date={date} />}
       </Card>
     </>
   );

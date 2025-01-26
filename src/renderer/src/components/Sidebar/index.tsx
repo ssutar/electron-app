@@ -18,7 +18,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
 
   // close on click outside
@@ -90,11 +90,33 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/dashboard"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('calendar') && 'bg-graydark dark:bg-meta-4'
+                    pathname === '/dashboard' && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <Home size={18} />
-                  Dashboard
+                  All updates
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/good-thoughts"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('good-thoughts') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <Home size={18} />
+                  Good thoughts
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/dashboard/day-specials"
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes('day-specials') && 'bg-graydark dark:bg-meta-4'
+                  }`}
+                >
+                  <Home size={18} />
+                  Day specials
                 </NavLink>
               </li>
               {/* <!-- Menu Item Calendar --> */}
@@ -103,7 +125,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 <NavLink
                   to="/dashboard/daily-updates"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
+                    pathname.includes('daily-updates') && 'bg-graydark dark:bg-meta-4'
                   }`}
                 >
                   <FileText size={18} />

@@ -1,12 +1,12 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IUpdate } from '@interfaces/models';
+import { IDailyUpdate } from '@interfaces/models';
 import { Button } from '../UI/Button';
 import { Link } from 'react-router-dom';
-import { Card } from '../UI/Card';
+import { formatDate } from '@renderer/utils/date';
 
 export type DailyUpdatesTableType = {
-  dailyUpdates: IUpdate[];
+  dailyUpdates: IDailyUpdate[];
   currentDate: Date;
   handleRegisterPrint: () => void;
   goodThought?: string;
@@ -18,93 +18,104 @@ export const DailyUpdatesTable = ({
   dailyUpdates,
   handleRegisterPrint,
   goodThought,
-  daySpecial
+  daySpecial,
 }: DailyUpdatesTableType) => {
   const { t } = useTranslation();
 
-  const dateString = useMemo(() => {
-    const date = `${currentDate.getDate()}`.padStart(2, '0');
-    const month = `${currentDate.getMonth() + 1}`.padStart(2, '0');
-    const year = currentDate.getFullYear();
-    return `${date}-${month}-${year}`;
-  }, [currentDate]);
+  const dateString = useMemo(() => formatDate(currentDate), [currentDate]);
+
+  // bg-slate-200/50 rounded p-6 pb-8 dark:bg-meta-4
 
   return (
-    <Card>
-      <div className="flex flex-col md:flex-row gap-4 mb-4">
-        <div className="flex-1 flex flex-col gap-4">
-          <div className="flex justify-between gap-2">
-            <div className="flex-1">
-              <span className="mr-4 text-black dark:text-white font-medium">
-                {t('dateForm.day')}
-              </span>
-              <span>{currentDate.toLocaleString('default', { weekday: 'long' })}</span>
-            </div>
-            <div className="flex-1">
-              <span className="mr-4 text-black dark:text-white font-medium">Date</span>
-              <span>{dateString}</span>
-            </div>
-          </div>
-          <p>
-            <span className="mr-4 text-black dark:text-white font-medium">Good thought</span>Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Quisquam harum quas error explicabo
-            doloribus? Sint alias laborum maxime quasi consequuntur, neque asperiores illo, vero
-            delectus rem tempora quaerat ea inventore.
-          </p>
+    <>
+      <div className="flex justify-between gap-2">
+        <div>
+          <span className="mr-4 text-black dark:text-white font-medium">
+            {t('dailyUpdatesHeader.day')}
+          </span>
+          <span>{currentDate.toLocaleString('default', { weekday: 'long' })}</span>
         </div>
-        <div className="flex-1">
-          <p>
-            <span className="mr-4 text-black dark:text-white font-medium">Day special</span>Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Veritatis saepe voluptatem sed, quod
-            consequatur sit deserunt, provident voluptatibus accusantium fugiat error molestiae amet
-            cupiditate maxime dolorum culpa quis modi dolores.
-          </p>
+        <div>
+          <span className="mr-4 text-black dark:text-white font-medium">
+            {t('dailyUpdatesHeader.date')}
+          </span>
+          <span>{dateString}</span>
         </div>
       </div>
+      <div className="grid grid-cols-1 gap-4">
+        <p>
+          <span className="mr-4 text-black dark:text-white font-medium">
+            {t('dailyUpdatesHeader.goodThought')}
+          </span>
+          {goodThought || t('dailyUpdatesHeader.noGoodThought')}
+        </p>
+        <p>
+          <span className="mr-4 text-black dark:text-white font-medium">
+            {t('dailyUpdatesHeader.daySpecial')}
+          </span>
+          {daySpecial || t('dailyUpdatesHeader.noDaySpecial')}
+        </p>
+        <Link
+          className="block text-primary text-lg text-right"
+          to={`/dashboard/link-daily-updates-header?date=${dateString}`}
+        >
+          {t('dailyUpdatesHeader.change', { date: dateString })}
+        </Link>
+        <hr />
+      </div>
+      <Link
+        className="block px-4 text-primary text-lg text-right"
+        to={`/dashboard/link-daily-updates?date=${dateString}`}
+      >
+        {t('dailyUpdatesTable.add', { date: dateString })}
+      </Link>
       <div className="mb-6 border border-stroke dark:border-strokedark rounded overflow-x-auto">
         <table className="table-auto mb-6">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4 border-b border-b-stroke dark:border-strokedark">
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.period')}
+                {t('dailyUpdatesTable.columns.period')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.grade')}
+                {t('dailyUpdatesTable.columns.grade')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.subject')}
+                {t('dailyUpdatesTable.columns.subject')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.teachingMethod')}
+                {t('dailyUpdatesTable.columns.teachingMethod')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.teachingAid')}
+                {t('dailyUpdatesTable.columns.teachingAid')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.boardWork')}
+                {t('dailyUpdatesTable.columns.boardWork')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.objectives')}
+                {t('dailyUpdatesTable.columns.objectives')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.teacherProcedure')}
+                {t('dailyUpdatesTable.columns.teacherProcedure')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.studentProcedure')}
+                {t('dailyUpdatesTable.columns.studentProcedure')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.onlineMedium')}
+                {t('dailyUpdatesTable.columns.onlineMedium')}
               </th>
               <th className="py-4 px-4 font-medium text-black dark:text-white">
-                {t('dailyRegisterTable.columns.homeWork')}
+                {t('dailyUpdatesTable.columns.homeWork')}
               </th>
             </tr>
           </thead>
           <tbody>
             {dailyUpdates.length ? (
-              dailyUpdates.map((up: IUpdate) => {
+              dailyUpdates.map((up: IDailyUpdate) => {
                 return (
                   <tr key={up.id}>
+                    <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
+                      <p className="text-black dark:text-white">{up.period}</p>
+                    </td>
                     <td className="border-b border-[#eee] py-5 px-4 dark:border-strokedark">
                       <p className="text-black dark:text-white">{up.grade}</p>
                     </td>
@@ -141,26 +152,22 @@ export const DailyUpdatesTable = ({
             ) : (
               <tr>
                 <td colSpan={11}>
-                  <p className="text-black dark:text-white px-6 py-8 text-center">{`No daily updates found for the date ${dateString}`}</p>
+                  <p className="text-black dark:text-white px-6 py-8 text-center">
+                    {t('dailyUpdatesTable.empty', { date: dateString })}
+                  </p>
                 </td>
               </tr>
             )}
           </tbody>
         </table>
-        <Link
-          className="block px-4 py-6 text-primary text-lg"
-          to={`/dashboard/link-daily-updates?date=${dateString}`}
-        >
-          {t('linkDailyUpdateFormDialog.add', { date: dateString })}
-        </Link>
       </div>
       <Button
         disabled={!dailyUpdates.length}
         isFullWidth={true}
         outline={true}
         onClick={handleRegisterPrint}
-        label={t('homePage.print')}
+        label={t('dailyUpdatesTable.print')}
       />
-    </Card>
+    </>
   );
 };

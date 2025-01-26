@@ -3,21 +3,47 @@ export default {
     global: {
       appName: 'TeacherUp',
     },
-    homePage: {
+    dailyUpdatesPage: {
       title: 'Daily updates',
       print: 'Print',
     },
     updatesPage: {
       title: 'All updates',
     },
-    dateForm: {
+    goodThoughtsPage: {
+      title: 'Good thoughts',
+    },
+    daySpecialsPage: {
+      title: 'Day specials',
+    },
+    addGoodThoughtsPage: {
+      title: 'Add good thought',
+    },
+    addDaySpecialsPage: {
+      title: 'Add day special',
+    },
+    linkDailyUpdatesHeaderPage: {
+      title: 'Change good thought and day special for {{date}}',
+    },
+    dateInputForm: {
+      title: 'Select the date and search for daily updates',
+      date: 'Date',
+      search: 'Search',
+      errors: {
+        date: {
+          required: 'Please select a valid date',
+        },
+      },
+    },
+    dailyUpdatesHeader: {
       date: 'Date',
       day: 'Day',
       month: 'Month',
       goodThought: 'Good thought',
       daySpecial: 'Day special',
+      change: 'Change good thought and day special for {{date}}',
     },
-    dailyRegisterTable: {
+    dailyUpdatesTable: {
       columns: {
         period: 'Period',
         grade: 'Grade',
@@ -31,6 +57,9 @@ export default {
         onlineMedium: 'Online medium',
         homeWork: 'Home work',
       },
+      add: 'Add daily updates for {{date}}',
+      print: 'Print',
+      empty: 'No daily updates found for the date {{date}}',
     },
     updatesTable: {
       columns: {
@@ -45,14 +74,24 @@ export default {
         onlineMedium: 'Online medium',
         homeWork: 'Home work',
       },
-    },
-    linkDailyUpdateFormDialog: {
-      title: 'Link the daily updates',
-      add: 'Add daily updates for the date {{date}}',
-    },
-    addUpdateFormDialog: {
-      title: 'Enter the updates',
+      empty: 'No updates found, please add updates',
       add: 'Add updates',
+    },
+    goodThoughtsTable: {
+      columns: {
+        index: 'Index',
+        goodThought: 'Good thought',
+      },
+      add: 'Add good thought',
+      empty: 'No good thoughts found, please add good thoughts',
+    },
+    daySpecialsTable: {
+      columns: {
+        index: 'Index',
+        daySpecial: 'Day special',
+      },
+      add: 'Add day special',
+      empty: 'No day specials found, please add day specials',
     },
     addUpdateForm: {
       date: 'Date',
@@ -72,6 +111,7 @@ export default {
       save: 'Save',
       root: {
         success: 'Update inserted successfully, <2>go to dashboard</2>',
+        error: 'Something went wrong, please try again later',
       },
       errors: {
         grade: {
@@ -79,6 +119,9 @@ export default {
         },
         subject: {
           required: 'Please select a valid subject',
+        },
+        period: {
+          required: 'Please select a valid period',
         },
         teachingMethod: {
           required: 'Please enter a valid teaching method',
@@ -106,24 +149,27 @@ export default {
         },
       },
     },
-
     linkDailyUpdateForm: {
-      date: 'Date',
+      title: 'Please selet the update from the table and period',
       period: 'Period',
       selectPeriod: 'Select period',
+      linkDailyUpdates: 'Link daily updates',
+      root: {
+        success: 'Update linked successfully, <2>go to daily updates</2>',
+        error: 'Something went wrong, please try again later',
+      },
+      errors: {
+        period: {
+          required: 'Please select a valid period',
+        },
+      },
+    },
+    dailyUpdateSearchForm: {
+      title: 'Please select the grade and subject to search',
       grade: 'Grade',
-      selectGrade: 'Select grade',
+      selectGrade: 'Select your grade',
       subject: 'Subject',
-      selectSubject: 'Select subject',
-      teachingMethod: 'Teaching method',
-      teachingAid: 'Teaching aid',
-      boardWork: 'Board work',
-      objectives: 'Objectives',
-      teacherProcedure: 'Teacher procedure',
-      studentProcedure: 'Student procedure',
-      onlineMedium: 'Online medium',
-      homeWork: 'Home work',
-      link: 'Link',
+      selectSubject: 'Select your subject',
       search: 'Search',
       errors: {
         grade: {
@@ -132,33 +178,41 @@ export default {
         subject: {
           required: 'Please select a valid subject',
         },
-        teachingMethod: {
-          required: 'Please enter a valid teaching method',
+      },
+    },
+    dailyUpdatesHeaderLinkForm: {
+      goodThoughts: 'Select a good thought from the table below',
+      daySpecial: 'Select a day special from the table below',
+      save: 'Save',
+      root: {
+        success: 'Good thought and day special linked successfully, <2>go to daily updates</2>',
+        error: 'Something went wrong, please try again later',
+      },
+      errors: {
+        goodThought: {
+          required: 'Please select a valid good thought',
         },
-        teachingAid: {
-          required: 'Please enter a valid teaching aid',
-        },
-        boardWork: {
-          required: 'Please enter a valid board work',
-        },
-        objectives: {
-          required: 'Please enter a valid objectives',
-        },
-        teacherProcedure: {
-          required: 'Please enter a valid teacher procedure',
-        },
-        studentProcedure: {
-          required: 'Please enter a valid student procedure',
-        },
-        onlineMedium: {
-          required: 'Please enter a valid online medium',
-        },
-        homeWork: {
-          required: 'Please enter a valid home work',
+        daySpecial: {
+          required: 'Please select a valid day special',
         },
       },
     },
-
+    addGoodThoughtForm: {
+      thought: 'Good thought',
+      save: 'Save',
+      root: {
+        success: 'Good thought inserted successfully, <2>go back to good thoughts</2>',
+        error: 'Something went wrong, please try again later',
+      },
+    },
+    addDaySpecialForm: {
+      special: 'Day special',
+      save: 'Save',
+      root: {
+        success: 'Day special inserted successfully, <2>go back to day specials</2>',
+        error: 'Something went wrong, please try again later',
+      },
+    },
     loginForm: {
       title: 'Sign in to TeacherUp',
       email: 'Email',

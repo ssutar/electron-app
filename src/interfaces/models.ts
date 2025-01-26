@@ -14,6 +14,24 @@ export interface IUpdate {
   onlineMedium: string;
 }
 
+export interface IDailyUpdate extends IUpdate {
+  period?: number;
+  date: string;
+}
+
+export interface IDailyUpdateHeaderFormData {
+  date: string;
+  goodThoughtId: string;
+  daySpecialId: string;
+  teacherId: string;
+}
+
+export interface IDailyUpdateHeader extends IDailyUpdateHeaderFormData {
+  id?: string;
+  goodThought?: string;
+  daySpecial?: string;
+}
+
 export interface IUpdateFormData {
   teacherId: string;
   grade: number;
@@ -73,4 +91,17 @@ export interface ILinkDailyUpdateFormData {
   date: string;
   updateId: string;
   period: string;
+  teacherId: string;
+}
+
+export interface IGoodThought {
+  id?: string;
+  thought: string;
+  teacherId: string;
+}
+
+export interface IDaySpecial {
+  id?: string;
+  special: string;
+  teacherId: string;
 }

@@ -78,11 +78,9 @@ app.whenReady().then(() => {
     );
   });
 
-  ipcMain.handle('getUpdatesByDate', (_, date) => {
-    const stmt = db.prepare('SELECT * FROM DailyUpdates WHERE date = @date');
-    const result = stmt.all({ date });
-    return result;
-  });
+  /**
+   * Updates
+   */
 
   ipcMain.handle('getAllUpdates', (_, teacherId) => {
     // SELECT u.*, s.title as subject, t.name as teacherName FROM Updates u JOIN Subjects s ON (u.subjectId = s.id) JOIN Teachers t ON (u.teacherId = t.id) WHERE u.teacherId = '1'
@@ -95,21 +93,9 @@ app.whenReady().then(() => {
 
   ipcMain.handle('searchUpdates', (_, { subjectId, teacherId, grade }) => {
     const stmt = db.prepare(
-      'SELECT * FROM Updates WHERE teacherId = @teacherId AND subjectId = @subjectId AND grade = @grade',
+      'SELECT u.*, s.title as subject FROM Updates u JOIN Subjects s ON (u.subjectId = s.id) WHERE u.teacherId = @teacherId AND u.subjectId = @subjectId AND u.grade = @grade',
     );
     const result = stmt.all({ teacherId, subjectId, grade });
-    return result;
-  });
-
-  ipcMain.handle('getAllSubjects', (_, teacherId) => {
-    const stmt = db.prepare('SELECT * FROM Subjects WHERE teacherId = @teacherId');
-    const result = stmt.all({ teacherId });
-    return result;
-  });
-
-  ipcMain.handle('getSchools', () => {
-    const stmt = db.prepare('SELECT * FROM Schools');
-    const result = stmt.all();
     return result;
   });
 
@@ -121,14 +107,111 @@ app.whenReady().then(() => {
     return stmt.run(update);
   });
 
-  ipcMain.handle('linkUpdate', (_, linkUpdateFormData) => {
-    const stmt = db.prepare(`INSERT INTO DailyUpdates
-      (date, period, updateId)
-      VALUES(@date, @period, @updateId);
-    `);
-    return stmt.run(linkUpdateFormData);
+  ipcMain.handle('deleteUpdate', (_, updateId) => {
+    const stmt = db.prepare('DELETE FROM Updates WHERE id = @updateId');
+    return stmt.run({ updateId });
   });
 
+  /**
+   * Daily Updates
+   */
+
+  ipcMain.handle('linkDailyUpdate', (_, linkDailyUpdateFormData) => {
+    const stmt = db.prepare(`INSERT INTO DailyUpdates
+      (date, period, updateId, teacherId)
+      VALUES(@date, @period, @updateId, @teacherId);
+    `);
+    return stmt.run(linkDailyUpdateFormData);
+  });
+
+  ipcMain.handle('getDailyUpdateHeaderByDate', (_, { date, teacherId }) => {
+    const stmt = db.prepare(
+      `SELECT duh.*, ds.special as daySpecial, gt.thought as goodThought
+      FROM DailyUpdatesHeaders duh 
+      LEFT OUTER JOIN DaySpecials ds ON (ds.id = duh.daySpecialId AND ds.teacherId = duh.teacherId)
+      LEFT OUTER JOIN GoodThoughts gt ON (gt.id = duh.goodThoughtId AND gt.teacherId = duh.teacherId)
+      WHERE duh.date = @date AND duh.teacherId = @teacherId`,
+    );
+    const result = stmt.get({ date, teacherId });
+    return result;
+  });
+
+  ipcMain.handle('getDailyUpdatesByDate', (_, { teacherId, date }) => {
+    const stmt = db.prepare(
+      `SELECT 
+        du.date, 
+        du.period, 
+        u.*, 
+        s.title as subject
+      FROM DailyUpdates du JOIN Updates u ON (du.updateId = u.id) 
+      JOIN Subjects s ON (u.subjectId = s.id AND u.teacherId = s.teacherId)
+      WHERE du.date = @date AND du.teacherId = @teacherId`,
+    );
+    const result = stmt.all({ date, teacherId });
+    return result;
+  });
+
+  ipcMain.handle('dailyUpdateHeaderFormData', (_, dailyUpdateHeaderFormData) => {
+    const stmt = db.prepare(`
+      INSERT INTO DailyUpdatesHeaders
+      (date, goodThoughtId, daySpecialId, teacherId)
+      VALUES(@date, @goodThoughtId, @daySpecialId, @teacherId);
+    `);
+    return stmt.run(dailyUpdateHeaderFormData);
+  });
+
+  /**
+   * Subjects
+   */
+  ipcMain.handle('getAllSubjects', (_, teacherId) => {
+    const stmt = db.prepare('SELECT * FROM Subjects WHERE teacherId = @teacherId');
+    const result = stmt.all({ teacherId });
+    return result;
+  });
+
+  /**
+   * Good thoughts and Day specials
+   */
+  ipcMain.handle('getAllGoodThoughts', (_, teacherId) => {
+    const stmt = db.prepare('SELECT * FROM GoodThoughts WHERE teacherId = @teacherId');
+    const result = stmt.all({ teacherId });
+    return result;
+  });
+
+  ipcMain.handle('insertGoodThought', (_, goodThoughtFormData) => {
+    const stmt = db.prepare(`INSERT INTO GoodThoughts
+      (teacherId, thought)
+      VALUES(@teacherId, @thought);
+    `);
+    return stmt.run(goodThoughtFormData);
+  });
+
+  ipcMain.handle('getAllDaySpecials', (_, teacherId) => {
+    const stmt = db.prepare('SELECT * FROM DaySpecials WHERE teacherId = @teacherId');
+    const result = stmt.all({ teacherId });
+    return result;
+  });
+
+  ipcMain.handle('insertDaySpecial', (_, daySpecialFormData) => {
+    const stmt = db.prepare(`INSERT INTO DaySpecials
+      (teacherId, special)
+      VALUES(@teacherId, @special);
+    `);
+    return stmt.run(daySpecialFormData);
+  });
+
+  /**
+   * Schools
+   */
+  ipcMain.handle('getSchools', () => {
+    const stmt = db.prepare('SELECT * FROM Schools');
+    const result = stmt.all();
+    return result;
+  });
+
+  /**
+   * Authentication
+   */
   ipcMain.handle('signup', (_, signupFormData) => {
     const stmt = db.prepare(`INSERT INTO Teachers
       (name, schoolId, email, password)
