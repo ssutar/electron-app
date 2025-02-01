@@ -1,18 +1,20 @@
 import { UpdatesTable } from '../components/Updates/UpdatesTable';
-import { useTranslation } from 'react-i18next';
 import { IUpdate } from '@interfaces/models';
-import { useAuth } from '../components/AuthContext';
-import Breadcrumb from '@renderer/components/Breadcrumbs/Breadcrumb';
+import { useAuth } from '@/components/AuthContext';
 import { useQuery } from '@tanstack/react-query';
-import { Card } from '@renderer/components/UI/Card';
-import { BlockLoader } from '@renderer/components/UI/Loaders';
+import { BlockLoader } from '@/components/ui/Loaders';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { useTranslation } from 'react-i18next';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { Plus } from 'lucide-react';
+import { useSetBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
 
-const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
+// const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 
 export const Updates = () => {
   const { authUser } = useAuth();
   const { t } = useTranslation();
-
   const {
     data: updates,
     isLoading,
@@ -20,19 +22,35 @@ export const Updates = () => {
   } = useQuery<IUpdate[]>({
     queryKey: ['updates', authUser?.id],
     queryFn: async () => {
-      await sleep(5000);
+      // await sleep(5000);
       return window.api.getAllUpdates(authUser?.id || '');
     },
     enabled: !!authUser?.id,
   });
 
+  useSetBreadcrumbs([{ name: t('breadcrumb.updates'), path: '/updates' }]);
+
   return (
-    <>
-      <Breadcrumb title={t('updatesPage.title')} />
-      <Card>
+    <Card>
+      <CardHeader>
+        <CardTitle className="text-2xl">{t('updatesPage.title')}</CardTitle>
+        <CardDescription>{t('updatesPage.description')}</CardDescription>
+      </CardHeader>
+      <CardContent>
         {isLoading && <BlockLoader />}
-        {isSuccess && <UpdatesTable updates={updates} />}
-      </Card>
-    </>
+        {isSuccess && (
+          <>
+            <div className="text-right">
+              <Button asChild variant={'link'}>
+                <Link to={`/updates/add`}>
+                  <Plus /> {t('updatesPage.add')}
+                </Link>
+              </Button>
+            </div>
+            <UpdatesTable updates={updates} />
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 };

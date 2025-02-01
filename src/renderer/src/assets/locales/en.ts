@@ -3,30 +3,75 @@ export default {
     global: {
       appName: 'TeacherUp',
     },
+    breadcrumb: {
+      updates: 'All updates',
+      allUpdates: 'All updates',
+      addUpdates: 'Add updates',
+      dailyUpdates: 'Daily updates',
+      allDailyUpdates: 'All daily updates',
+      addDailyUpdates: 'Add daily updates',
+      addDailyUpdatesHeader: 'Add daily header',
+      goodThoughts: 'Good quotes',
+      allGoodThoughts: 'All good quotes',
+      addGoodThoughts: 'Add good quotes',
+      daySpecials: 'Day specials',
+      allDaySpecials: 'All day specials',
+      addDaySpecials: 'Add day specials',
+    },
+    sidebar: {
+      brandName: 'TeacherUp',
+      navMain: {
+        dashboard: 'Dashboard',
+        updates: 'Updates',
+        allUpdates: 'All updates',
+        addUpdates: 'Add updates',
+        dailyUpdates: 'Daily updates',
+        allDailyUpdates: 'All daily updates',
+        addDailyUpdates: 'Add daily updates',
+        addDailyUpdatesHeader: 'Add daily header',
+        goodThoughts: 'Good quotes',
+        allGoodThoughts: 'All good quotes',
+        addGoodThoughts: 'Add good quotes',
+        daySpecials: 'Day specials',
+        allDaySpecials: 'All day specials',
+        addDaySpecials: 'Add day specials',
+      },
+      user: {
+        account: 'Account',
+        logout: 'Logout',
+      },
+    },
     dailyUpdatesPage: {
       title: 'Daily updates',
+      description: 'Browse the daily updates by the date selected',
       print: 'Print',
     },
     updatesPage: {
       title: 'All updates',
+      add: 'Add new updates',
+      description: 'Browse all the updates by grade and subjects',
     },
     goodThoughtsPage: {
-      title: 'Good thoughts',
+      title: 'Good quotes',
     },
     daySpecialsPage: {
       title: 'Day specials',
     },
     addGoodThoughtsPage: {
-      title: 'Add good thought',
+      title: 'Add good quote',
+      backToGoodThoughtsPage: 'Back to good quotes',
     },
     addDaySpecialsPage: {
       title: 'Add day special',
+      backToDaySpecialsPage: 'Back to day specials',
     },
     linkDailyUpdatesHeaderPage: {
-      title: 'Change good thought and day special for {{date}}',
+      title: 'Change good quote and day special for {{date}}',
     },
     dateInputForm: {
-      title: 'Select the date and search for daily updates',
+      title: 'Search',
+      description: 'Select the date and search for daily updates',
+      datePlaceholder: 'Select the date',
       date: 'Date',
       search: 'Search',
       errors: {
@@ -39,11 +84,15 @@ export default {
       date: 'Date',
       day: 'Day',
       month: 'Month',
-      goodThought: 'Good thought',
+      goodThought: 'Good quote',
+      noGoodThought: 'No good quotes',
       daySpecial: 'Day special',
-      change: 'Change good thought and day special for {{date}}',
+      noDaySpecial: 'No day specials',
+      change: 'Change good quote and day special for {{date}}',
     },
     dailyUpdatesTable: {
+      filterBy: 'Filter by subject',
+      columnsSelector: 'Select columns',
       columns: {
         period: 'Period',
         grade: 'Grade',
@@ -62,6 +111,8 @@ export default {
       empty: 'No daily updates found for the date {{date}}',
     },
     updatesTable: {
+      filterBy: 'Filter by subject',
+      columnsSelector: 'Select columns',
       columns: {
         grade: 'Grade',
         subject: 'Subject',
@@ -73,6 +124,13 @@ export default {
         studentProcedure: 'Student procedure',
         onlineMedium: 'Online medium',
         homeWork: 'Home work',
+        selectRow: 'Select update',
+        actions: {
+          openMenu: 'Open action menu',
+          actionLabel: 'Actions',
+          edit: 'Edit',
+          delete: 'Delete',
+        },
       },
       empty: 'No updates found, please add updates',
       add: 'Add updates',
@@ -80,34 +138,63 @@ export default {
     goodThoughtsTable: {
       columns: {
         index: 'Index',
-        goodThought: 'Good thought',
+        thought: 'Good quote',
+        selectRow: 'Select good quote',
+        actions: {
+          openMenu: 'Open actions menu',
+          actionLabel: 'Actions',
+          edit: 'Edit',
+          delete: 'Delete',
+        },
       },
-      add: 'Add good thought',
-      empty: 'No good thoughts found, please add good thoughts',
+      filterBy: 'Filter by quotes',
+      columnsSelector: 'Select columns',
+      add: 'Add good quote',
+      empty: 'No good quotes found, please add good quotes',
     },
     daySpecialsTable: {
       columns: {
         index: 'Index',
-        daySpecial: 'Day special',
+        special: 'Day special',
+        selectRow: 'Select day special',
+        actions: {
+          openMenu: 'Open actions menu',
+          actionLabel: 'Actions',
+          edit: 'Edit',
+          delete: 'Delete',
+        },
       },
+      filterBy: 'Filter by day specials',
+      columnsSelector: 'Select columns',
       add: 'Add day special',
       empty: 'No day specials found, please add day specials',
     },
     addUpdateForm: {
+      title: 'Add updates',
+      description: 'Add updates for the grade and subject',
+      backToUpdatesPage: 'Back to all updates',
       date: 'Date',
-      period: 'Period',
-      selectPeriod: 'Select period',
       grade: 'Grade',
+      gradePlaceholder: 'Select your grade',
       selectGrade: 'Select grade',
       subject: 'Subject',
+      subjectPlaceholder: 'Select your subject',
       teachingMethod: 'Teaching method',
+      teachingMethodPlaceholder: 'Enter your teaching method',
       teachingAid: 'Teaching aid',
+      teachingAidPlaceholder: 'Enter your teaching aid',
       boardWork: 'Board work',
+      boardWorkPlaceholder: 'Enter your board work',
       objectives: 'Objectives',
+      objectivesPlaceholder: 'Enter your objectives',
       teacherProcedure: 'Teacher procedure',
+      teacherProcedurePlaceholder: 'Enter your teacher procedure',
       studentProcedure: 'Student procedure',
+      studentProcedurePlaceholder: 'Enter your student procedure',
       onlineMedium: 'Online medium',
+      onlineMediumPlaceholder: 'Enter your online medium',
       homeWork: 'Home work',
+      homeWorkPlaceholder: 'Enter your home work',
       save: 'Save',
       root: {
         success: 'Update inserted successfully, <2>go to dashboard</2>',
@@ -150,12 +237,13 @@ export default {
       },
     },
     linkDailyUpdateForm: {
-      title: 'Please selet the update from the table and period',
+      updateId: 'Please selet the update from the table below',
+      updatesSearchResults: 'Showing the updates to add to {{date}}',
       period: 'Period',
-      selectPeriod: 'Select period',
-      linkDailyUpdates: 'Link daily updates',
+      periodPlaceholder: 'Select your period',
+      linkDailyUpdates: 'Add daily updates for {{date}}',
       root: {
-        success: 'Update linked successfully, <2>go to daily updates</2>',
+        success: 'Update added successfully, <2>go to daily updates</2>',
         error: 'Something went wrong, please try again later',
       },
       errors: {
@@ -165,11 +253,14 @@ export default {
       },
     },
     dailyUpdateSearchForm: {
-      title: 'Please select the grade and subject to search',
+      title: 'Search for updates',
+      description:
+        'Please select the grade and subject to search to add daily updates for {{date}}',
+      backToDailyUpdatesPage: 'Back to daily updates',
       grade: 'Grade',
-      selectGrade: 'Select your grade',
+      gradePlaceholder: 'Select your grade',
       subject: 'Subject',
-      selectSubject: 'Select your subject',
+      subjectPlaceholder: 'Select your subject',
       search: 'Search',
       errors: {
         grade: {
@@ -190,7 +281,7 @@ export default {
       },
       errors: {
         goodThought: {
-          required: 'Please select a valid good thought',
+          required: 'Please select a valid good quote',
         },
         daySpecial: {
           required: 'Please select a valid day special',
@@ -198,8 +289,14 @@ export default {
       },
     },
     addGoodThoughtForm: {
-      thought: 'Good thought',
+      thought: 'Good quote',
+      thoughtPlaceholder: 'Enter good quote',
       save: 'Save',
+      errors: {
+        thought: {
+          required: 'Please select a valid good quote',
+        },
+      },
       root: {
         success: 'Good thought inserted successfully, <2>go back to good thoughts</2>',
         error: 'Something went wrong, please try again later',
@@ -207,19 +304,29 @@ export default {
     },
     addDaySpecialForm: {
       special: 'Day special',
+      specialPlaceholder: 'Enter day special',
       save: 'Save',
+      errors: {
+        special: {
+          required: 'Please select a valid day special',
+        },
+      },
       root: {
         success: 'Day special inserted successfully, <2>go back to day specials</2>',
         error: 'Something went wrong, please try again later',
       },
     },
     loginForm: {
-      title: 'Sign in to TeacherUp',
+      title: 'Welcome back',
+      subtitle: 'Sign in to TeacherUp',
       email: 'Email',
+      emailPlaceholder: 'Enter your email',
       password: 'Password',
+      passwordPlaceholder: 'Enter your password',
+      forgotPassword: 'Forgot your password?',
       login: 'Login',
-      signupText: 'Do not have an account?',
-      signup: 'Signup',
+      signupText: "Don't have an account?",
+      signup: 'Sign up',
       errors: {
         email: {
           required: 'Please enter a valid email',
@@ -236,12 +343,17 @@ export default {
       title: 'SignUp to TeacherUp',
       subtitle: 'Start for free',
       email: 'Email',
+      emailPlaceholder: 'm@example.com',
       name: 'Name',
+      namePlaceholder: 'Enter your name',
       password: 'Password',
+      passwordPlaceholder: '6+ Characters, 1 Capital letter',
       school: 'School',
+      schoolPlaceholder: 'Select school',
       selectSchool: 'Please select school',
       confirmPassword: 'Confirm password',
-      signup: 'Signup',
+      confirmPasswordPlaceholder: 'Should match password',
+      signup: 'Sign up',
       loginText: 'Already have an account?',
       login: 'Login',
       root: {

@@ -34,7 +34,7 @@ export interface IDailyUpdateHeader extends IDailyUpdateHeaderFormData {
 
 export interface IUpdateFormData {
   teacherId: string;
-  grade: number;
+  grade: string;
   subjectId: string;
   teachingMethod: string;
   teachingAid: string;
@@ -51,12 +51,12 @@ export interface ISignupFormData {
   email: string;
   password: string;
   name: string;
-  schoolId: number;
+  schoolId: string;
   confirmPassword?: string;
 }
 
 export interface ISchool {
-  id?: number;
+  id?: string;
   name: string;
   address: string;
 }
@@ -73,6 +73,7 @@ export interface ITeacher {
   password: string;
   schoolId: string;
   school?: string;
+  avatar?: string;
 }
 
 export interface ISubject {
@@ -95,13 +96,13 @@ export interface ILinkDailyUpdateFormData {
 }
 
 export interface IGoodThought {
-  id?: string;
+  id: string;
   thought: string;
   teacherId: string;
 }
 
 export interface IDaySpecial {
-  id?: string;
+  id: string;
   special: string;
   teacherId: string;
 }

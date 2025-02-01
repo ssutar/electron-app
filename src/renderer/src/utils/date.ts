@@ -7,7 +7,7 @@ export const formatDateYYYYMMDD = (currentDate: Date) => {
   return currentDateString;
 };
 
-export const formatDate = (currentDate) => {
+export const formatDate = (currentDate: Date) => {
   const currentDateString = [
     ('0' + currentDate.getDate()).slice(-2),
     ('0' + (currentDate.getMonth() + 1)).slice(-2),

@@ -5,5 +5,5 @@ import { Navigate } from 'react-router-dom';
 export const HomePage = () => {
   const { isAuthenticated } = useAuth();
 
-  return isAuthenticated ? <Navigate to="/dashboard" /> : <Navigate to="/login" />;
+  return isAuthenticated ? <Navigate to="/updates" /> : <Navigate to="/login" />;
 };

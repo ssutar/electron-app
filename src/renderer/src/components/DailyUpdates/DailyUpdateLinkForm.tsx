@@ -1,13 +1,21 @@
 import { ILinkDailyUpdateFormData, IUpdate } from '@interfaces/models';
-import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Trans, useTranslation } from 'react-i18next';
-import { Button } from '../UI/Button';
-import { Select } from '../UI/Select';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { UpdatesTable } from '../Updates/UpdatesTable';
 import { useMutation } from '@tanstack/react-query';
 import { useAuth } from '../AuthContext';
 import { Link } from 'react-router-dom';
+import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
+import { Input } from '../ui/input';
+import { H3 } from '../ui/typography';
 
 type DailyUpdateLinkFormProps = {
   date: string;
@@ -17,28 +25,16 @@ type DailyUpdateLinkFormProps = {
 export const DailyUpdateLinkForm = ({ updates, date }: DailyUpdateLinkFormProps) => {
   const periods = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const { t } = useTranslation();
-  const [updateId, setUpdateId] = useState<string>();
-  const { control, handleSubmit } = useForm<ILinkDailyUpdateFormData>();
+  const form = useForm<ILinkDailyUpdateFormData>();
   const { authUser } = useAuth();
 
-  const onSelect = (updateId: string) => {
-    setUpdateId(updateId);
-  };
-
-  const { mutateAsync, isPending, isError, isSuccess, reset } = useMutation({
+  const { mutateAsync, isPending, isError, isSuccess } = useMutation({
     mutationFn: (data: ILinkDailyUpdateFormData) => {
-      if (updateId) {
-        data.updateId = updateId;
-      }
       if (authUser?.id) {
         data.teacherId = authUser.id;
       }
       data.date = date;
       return window.api.linkDailyUpdate(data);
-    },
-    onSuccess: () => {
-      setUpdateId('');
-      reset();
     },
   });
 
@@ -47,48 +43,68 @@ export const DailyUpdateLinkForm = ({ updates, date }: DailyUpdateLinkFormProps)
   };
 
   return (
-    <form onSubmit={handleSubmit(onLink)}>
-      <div className="mb-4">
-        <UpdatesTable updates={updates} onSelect={onSelect} hideAddUpdatesLink={true} />
-      </div>
-      <div className="mb-4">
-        <Select
-          // @ts-expect-error
-          control={control}
-          rules={{
-            required: true,
-            validate: (value) => value > 0,
-          }}
-          name="period"
-          defaultValue=""
-          errorMessage={t('linkDailyUpdateForm.errors.period.required')}
-          label={t('linkDailyUpdateForm.period')}
-          options={periods.map((g) => ({
-            value: g,
-            label: g,
-          }))}
-          placeholder={t('linkDailyUpdateForm.selectPeriod')}
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onLink)} className="grid grid-cols-1 gap-6">
+        <H3>{t('linkDailyUpdateForm.updatesSearchResults', { date })} </H3>
+        <FormField
+          name="updateId"
+          control={form.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('linkDailyUpdateForm.updateId')}</FormLabel>
+              <UpdatesTable
+                updates={updates}
+                onSelect={(id) => form.setValue('updateId', id)}
+                hideAddUpdatesLink={true}
+              />
+              <Input type="hidden" {...field} />
+              <FormErrorMessage>
+                {t('linkDailyUpdateForm.errors.updateId.required')}
+              </FormErrorMessage>
+            </FormItem>
+          )}
         />
-      </div>
-      {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.root.error')}</p>}
-      {isSuccess && (
-        <p className="text-success mb-4">
-          <Trans i18nKey={'linkDailyUpdateForm.root.success'}>
-            Update linked successfully,{' '}
-            <Link className="text-primary" to="/dashboard/daily-updates">
-              go to daily updates
-            </Link>
-          </Trans>
-        </p>
-      )}
-      <Button
-        disabled={updates.length === 0 || isPending}
-        htmlType="submit"
-        className="mt-4"
-        label={t('linkDailyUpdateForm.linkDailyUpdates')}
-        isFullWidth={true}
-        size={'lg'}
-      />
-    </form>
+        <FormField
+          name="period"
+          control={form.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="period">{t('linkDailyUpdateForm.period')}</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t('linkDailyUpdateForm.periodPlaceholder')} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {periods.map((period) => (
+                    <SelectItem value={`${period}`} key={period}>
+                      {period}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormErrorMessage>{t('linkDailyUpdateForm.errors.period.required')}</FormErrorMessage>
+            </FormItem>
+          )}
+        />
+        {isError && <p className="text-danger">{t('linkDailyUpdateForm.root.error')}</p>}
+        {isSuccess && (
+          <p className="text-success">
+            <Trans i18nKey={'linkDailyUpdateForm.root.success'}>
+              Update linked successfully,{' '}
+              <Link className="text-primary" to="/daily-updates">
+                go to daily updates
+              </Link>
+            </Trans>
+          </p>
+        )}
+        <Button disabled={updates.length === 0 || isPending} size={'lg'}>
+          {t('linkDailyUpdateForm.linkDailyUpdates', { date })}
+        </Button>
+      </form>
+    </Form>
   );
 };

@@ -1,5 +1,5 @@
 import { ISubject } from '@interfaces/models';
-import { useAuth } from '@renderer/components/AuthContext';
+import { useAuth } from '@/components/AuthContext';
 import { useState, useEffect } from 'react';
 
 export const useSubjects = () => {

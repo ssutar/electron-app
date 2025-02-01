@@ -17,33 +17,50 @@ import {
   Updates,
 } from './pages';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CenteredLayout } from '@/components/layout/CenteredLayout';
+import { ThemeProvider } from '@/components/theme-provider';
+import { BreadcrumbProvider } from './components/Breadcrumbs/Breadcrumb';
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <AuthContextProvider>
-          <Routes>
-            <Route path="/dashboard" element={<RequireAuth />}>
-              <Route index element={<Updates />} />
-              <Route path="good-thoughts" element={<GoodThoughtsPage />} />
-              <Route path="good-thoughts/add" element={<AddGoodThoughtsPage />} />
-              <Route path="day-specials" element={<DaySpecialsPage />} />
-              <Route path="day-specials/add" element={<AddDaySpecialsPage />} />
-              <Route path="daily-updates" element={<DailyUpdatesPage />} />
-              <Route path="add-updates" element={<AddUpdatesPage />} />
-              <Route path="link-daily-updates" element={<LinkDailyUpdatesPage />} />
-              <Route path="link-daily-updates-header" element={<LinkDailyUpdatesHeaderPage />} />
-            </Route>
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/signup" element={<SignUpPage />} />
-            <Route path="/status" element={<StatusPage />} />
-            <Route path="/" element={<HomePage />} />
-          </Routes>
-        </AuthContextProvider>
-      </Router>
+      <ThemeProvider>
+        <BreadcrumbProvider>
+          <Router>
+            <AuthContextProvider>
+              <Routes>
+                <Route element={<RequireAuth />}>
+                  <Route path="/updates">
+                    <Route index element={<Updates />} />
+                    <Route path="add" element={<AddUpdatesPage />} />
+                  </Route>
+                  <Route path="/good-thoughts">
+                    <Route index element={<GoodThoughtsPage />} />
+                    <Route path="add" element={<AddGoodThoughtsPage />} />
+                  </Route>
+                  <Route path="/day-specials">
+                    <Route index element={<DaySpecialsPage />} />
+                    <Route path="add" element={<AddDaySpecialsPage />} />
+                  </Route>
+                  <Route path="/daily-updates">
+                    <Route index element={<DailyUpdatesPage />} />
+                    <Route path="add" element={<LinkDailyUpdatesPage />} />
+                    <Route path="add-header" element={<LinkDailyUpdatesHeaderPage />} />
+                  </Route>
+                </Route>
+                <Route element={<CenteredLayout />}>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/signup" element={<SignUpPage />} />
+                  <Route path="/status" element={<StatusPage />} />
+                </Route>
+                <Route path="/" element={<HomePage />} />
+              </Routes>
+            </AuthContextProvider>
+          </Router>
+        </BreadcrumbProvider>
+      </ThemeProvider>
     </QueryClientProvider>
   );
 }

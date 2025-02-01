@@ -1,4 +1,4 @@
-import SignUp from '@renderer/components/Authentication/SignUp';
+import SignUp from '@/components/Authentication/SignUp';
 import React from 'react';
 
 export const SignUpPage = () => {

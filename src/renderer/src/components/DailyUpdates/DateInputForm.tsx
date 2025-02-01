@@ -1,10 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { Input } from '../UI/Input';
+import { Input } from '@/components/ui/input';
 import { useForm } from 'react-hook-form';
-import { Button } from '../UI/Button';
-import { Card } from '../UI/Card';
-import { formatDateYYYYMMDD } from '@renderer/utils/date';
+import { Button } from '@/components/ui/button';
+import { formatDateYYYYMMDD } from '@/utils/date';
 import { useMemo } from 'react';
+import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
 
 export type DateInputFormProps = {
   currentDate: Date;
@@ -13,47 +13,50 @@ export type DateInputFormProps = {
 };
 
 export interface IDateInputFormData {
-  registerDate: string;
+  date: string;
 }
 
 export const DateInputForm = ({ currentDate, onDateChange, isDisabled }: DateInputFormProps) => {
   const { t } = useTranslation();
-  const { control, handleSubmit } = useForm<IDateInputFormData>();
+  const form = useForm<IDateInputFormData>();
   const currentDateString = useMemo(() => formatDateYYYYMMDD(currentDate), [currentDate]);
 
   const onDateSubmit = (data: IDateInputFormData) => {
-    onDateChange(new Date(data.registerDate));
+    onDateChange(new Date(data.date));
   };
 
   return (
-    <Card title={t('dateInputForm.title')}>
-      <form onSubmit={handleSubmit(onDateSubmit)}>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onDateSubmit)}>
         <div className="flex gap-6 justify-between flex-col md:flex-row">
-          <div className="flex flex-1 items-center gap-6">
-            <Input
-              // @ts-expect-error
-              control={control}
-              label={t('dateInputForm.date')}
-              htmlType="date"
-              name="registerDate"
+          <div className="flex flex-1 items-center gap-4">
+            <FormField
+              name="date"
+              control={form.control}
+              rules={{ required: true }}
               defaultValue={currentDateString}
-              rules={{
-                required: true,
-              }}
-              errorMessage={t('dateInputForm.errors.date.required')}
+              render={({ field }) => (
+                <FormItem className="flex flex-1 items-center gap-4">
+                  <FormLabel htmlFor="email">{t('dateInputForm.date')}</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      className="!mt-0"
+                      type="date"
+                      placeholder={t('dateInputForm.datePlaceholder')}
+                      formNoValidate
+                    />
+                  </FormControl>
+                  <FormErrorMessage>{t('dateInputForm.errors.date.required')}</FormErrorMessage>
+                </FormItem>
+              )}
             />
           </div>
           <div>
-            <Button
-              disabled={isDisabled}
-              size="lg"
-              htmlType="submit"
-              label={t('dateInputForm.search')}
-              isFullWidth={true}
-            />
+            <Button disabled={isDisabled}>{t('dateInputForm.search')}</Button>
           </div>
         </div>
       </form>
-    </Card>
+    </Form>
   );
 };

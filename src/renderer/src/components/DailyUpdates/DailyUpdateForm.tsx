@@ -1,15 +1,24 @@
 import { ILinkDailyUpdateSearchFormData } from '@interfaces/models';
 import { useTranslation } from 'react-i18next';
-import { Select } from '../UI/Select';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
-import { Button } from '../UI/Button';
-import { Card } from '../UI/Card';
-import { useSubjects } from '@renderer/hooks/useSubjects';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/Card';
+import { useSubjects } from '@/hooks/useSubjects';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../AuthContext';
 import { DailyUpdateLinkForm } from './DailyUpdateLinkForm';
-import { BlockLoader } from '@renderer/components/UI/Loaders';
+import { BlockLoader } from '@/components/ui/Loaders';
+import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
+import { Link } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
 export type DailyUpdateFormProps = {
   date: string;
@@ -19,14 +28,13 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
   const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const { t } = useTranslation();
   const [searchFormData, setSearchFormData] = useState<ILinkDailyUpdateSearchFormData>();
-  const { control, handleSubmit } = useForm<ILinkDailyUpdateSearchFormData>();
+  const form = useForm<ILinkDailyUpdateSearchFormData>();
   const { authUser } = useAuth();
 
   const {
     data: updates,
     isLoading,
     isError,
-    isPending,
     isSuccess,
   } = useQuery({
     queryKey: ['updates', JSON.stringify(searchFormData)],
@@ -48,59 +56,98 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
   return (
     <>
       <Card title={t('dailyUpdateSearchForm.title')}>
-        <form onSubmit={handleSubmit(onSearch)}>
-          <div className="mb-4">
-            <Select
-              // @ts-expect-error
-              control={control}
-              rules={{
-                required: true,
-                validate: (value) => value > 0,
-              }}
-              name="grade"
-              defaultValue=""
-              errorMessage={t('dailyUpdateSearchForm.errors.grade.required')}
-              label={t('dailyUpdateSearchForm.grade')}
-              options={grades.map((g) => ({
-                value: g,
-                label: g,
-              }))}
-              placeholder={t('dailyUpdateSearchForm.selectGrade')}
-            />
+        <CardHeader>
+          <CardTitle className="text-2xl">{t('dailyUpdateSearchForm.title')}</CardTitle>
+          <CardDescription>{t('dailyUpdateSearchForm.description', { date })}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="text-right">
+            <Button asChild variant={'link'}>
+              <Link to={`/daily-updates`}>
+                <ArrowLeft /> {t('dailyUpdateSearchForm.backToDailyUpdatesPage')}
+              </Link>
+            </Button>
           </div>
-
-          <div className="mb-4">
-            <Select
-              // @ts-expect-error
-              control={control}
-              rules={{
-                required: true,
-                validate: (value) => value > 0,
-              }}
-              name="subjectId"
-              defaultValue=""
-              errorMessage={t('dailyUpdateSearchForm.errors.subject.required')}
-              label={t('dailyUpdateSearchForm.subject')}
-              options={subjects.map((sub, index) => ({
-                value: sub.id || index,
-                label: sub.title,
-              }))}
-              placeholder={t('dailyUpdateSearchForm.selectSubject')}
-            />
+          <div className="grid grid-cols-1 gap-6">
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSearch)} className="grid grid-cols-1 gap-6 mb-4">
+                <FormField
+                  name="grade"
+                  control={form.control}
+                  rules={{ required: true, validate: (value) => parseInt(value, 10) > 0 }}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="schoolId">{t('dailyUpdateSearchForm.grade')}</FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={t('dailyUpdateSearchForm.gradePlaceholder')}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {grades.map((grade) => (
+                            <SelectItem value={`${grade}`} key={grade}>
+                              {grade}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormErrorMessage>
+                        {t('dailyUpdateSearchForm.errors.grade.required')}
+                      </FormErrorMessage>
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  name="subjectId"
+                  control={form.control}
+                  rules={{ required: true }}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel htmlFor="subjectId">
+                        {t('dailyUpdateSearchForm.subject')}
+                      </FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger>
+                            <SelectValue
+                              placeholder={t('dailyUpdateSearchForm.subjectPlaceholder')}
+                            />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {subjects.map((subject) => (
+                            <SelectItem value={`${subject.id}`} key={subject.id}>
+                              {subject.title}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormErrorMessage>
+                        {t('dailyUpdateSearchForm.errors.subject.required')}
+                      </FormErrorMessage>
+                    </FormItem>
+                  )}
+                />
+                <Button className="mt-4" size={'lg'}>
+                  {t('dailyUpdateSearchForm.search')}
+                </Button>
+              </form>
+            </Form>
+            <>
+              {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.error')}</p>}
+              {isLoading && <BlockLoader />}
+              {isSuccess && (
+                <>
+                  <hr />
+                  <DailyUpdateLinkForm updates={updates} date={date} />
+                </>
+              )}
+            </>
           </div>
-          <Button
-            htmlType="submit"
-            className="mt-4"
-            label={'Search'}
-            isFullWidth={true}
-            size={'lg'}
-          />
-        </form>
-      </Card>
-      <Card isHidden={isPending} title={isError ? '' : t('linkDailyUpdateForm.title')}>
-        {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.error')}</p>}
-        {isLoading && <BlockLoader />}
-        {isSuccess && <DailyUpdateLinkForm updates={updates} date={date} />}
+        </CardContent>
       </Card>
     </>
   );

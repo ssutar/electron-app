@@ -1,15 +1,15 @@
 import { IGoodThought } from '@interfaces/models';
 import { useMutation } from '@tanstack/react-query';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
-import { Button } from '../UI/Button';
-import { Input } from '../UI/Input';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
+import { Textarea } from '../ui/textarea';
 
 export const GoodThoughtsForm = () => {
-  const { control, handleSubmit, reset: resetForm } = useForm<IGoodThought>();
+  const form = useForm<IGoodThought>();
   const { t } = useTranslation();
   const { authUser } = useAuth();
 
@@ -30,7 +30,7 @@ export const GoodThoughtsForm = () => {
       console.log(error);
     },
     onSuccess: () => {
-      resetForm();
+      form.reset();
     },
   });
 
@@ -40,41 +40,38 @@ export const GoodThoughtsForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onUpdateSubmit)}>
-      <div className="mb-4">
-        <Input
-          // @ts-expect-error
-          control={control}
-          rules={{
-            required: true,
-          }}
-          defaultValue=""
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onUpdateSubmit)} className="grid grid-cols-1 gap-6">
+        <FormField
           name="thought"
-          errorMessage={t('addGoodThoughtForm.errors.thought.required')}
-          label={t('addGoodThoughtForm.thought')}
-          placeholder={t('addGoodThoughtForm.thought')}
-          rows={3}
+          control={form.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel htmlFor="thought">{t('addGoodThoughtForm.thought')}</FormLabel>
+              <FormControl>
+                <Textarea {...field} placeholder={t('addGoodThoughtForm.thoughtPlaceholder')} />
+              </FormControl>
+              <FormErrorMessage>{t('addGoodThoughtForm.errors.thought.required')}</FormErrorMessage>
+            </FormItem>
+          )}
         />
-      </div>
 
-      {isError && <p className="text-danger mb-4">{t('addGoodThoughtForm.root.error')}</p>}
-      {isSuccess && (
-        <p className="text-success mb-4">
-          <Trans i18nKey={'addGoodThoughtForm.root.success'}>
-            Good thought inserted successfully,{' '}
-            <Link className="text-primary" to="/dashboard/good-thoughts">
-              go back to good thoughts
-            </Link>
-          </Trans>
-        </p>
-      )}
-      <Button
-        disabled={isPending}
-        isFullWidth={true}
-        size={'lg'}
-        type="submit"
-        label={t('addGoodThoughtForm.save')}
-      ></Button>
-    </form>
+        {isError && <p className="text-danger mb-4">{t('addGoodThoughtForm.root.error')}</p>}
+        {isSuccess && (
+          <p className="text-success mb-4">
+            <Trans i18nKey={'addGoodThoughtForm.root.success'}>
+              Good thought inserted successfully,{' '}
+              <Link className="text-primary" to="/good-thoughts">
+                go back to good thoughts
+              </Link>
+            </Trans>
+          </p>
+        )}
+        <Button disabled={isPending} size={'lg'} type="submit">
+          {t('addGoodThoughtForm.save')}
+        </Button>
+      </form>
+    </Form>
   );
 };

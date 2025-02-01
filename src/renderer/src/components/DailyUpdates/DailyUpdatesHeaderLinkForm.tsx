@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoodThoughtsTable } from '../GoodThoughts';
-import { Button } from '../UI/Button';
+import { Button } from '@/components/ui/button';
 import { Trans, useTranslation } from 'react-i18next';
 import { DaySpecialsTable } from '../DaySpecials';
 import { useAuth } from '../AuthContext';
@@ -8,6 +8,9 @@ import { useMutation } from '@tanstack/react-query';
 import { IDailyUpdateHeaderFormData } from '@interfaces/models';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { Form, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
+import { Input } from '../ui/input';
+import { ArrowLeft } from 'lucide-react';
 
 export type DailyUpdatesHeaderLinkFormProps = {
   date: string;
@@ -23,12 +26,7 @@ export const DailyUpdatesHeaderLinkForm = ({ date }: DailyUpdatesHeaderLinkFormP
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    setValue,
-  } = useForm<IDailyUpdateHeaderFormData>({
+  const form = useForm<IDailyUpdateHeaderFormData>({
     mode: 'onChange',
     defaultValues: {
       goodThoughtId: '',
@@ -43,53 +41,91 @@ export const DailyUpdatesHeaderLinkForm = ({ date }: DailyUpdatesHeaderLinkFormP
   };
 
   return (
-    <form className="flex flex-col gap-6" onSubmit={handleSubmit(onSubmit)}>
-      <div className="flex-1">
-        <h4 className="text-lg mb-4">{t('dailyUpdatesHeaderLinkForm.goodThoughts')}</h4>
-        <GoodThoughtsTable hideAddLink={true} onSelect={(id) => setValue('goodThoughtId', id)} />
-        <input
-          {...register('goodThoughtId', {
-            required: true,
-            validate: (value) => {
-              console.log({ value });
-              return !!value;
-            },
-          })}
-          type="hidden"
-        />
-        {errors.goodThoughtId && (
-          <p className="text-danger text-sm">
-            {t('dailyUpdatesHeaderLinkForm.errors.goodThought.required')}
-          </p>
-        )}
+    <Form {...form}>
+      <div className="text-right">
+        <Button asChild variant={'link'}>
+          <Link to={`/daily-updates`}>
+            <ArrowLeft /> {t('dailyUpdateSearchForm.backToDailyUpdatesPage')}
+          </Link>
+        </Button>
       </div>
-      <div className="flex-1">
-        <h4 className="text-lg mb-4">{t('dailyUpdatesHeaderLinkForm.daySpecial')}</h4>
+      <form className="flex flex-col gap-6" onSubmit={form.handleSubmit(onSubmit)}>
+        <FormField
+          name="goodThoughtId"
+          control={form.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('dailyUpdatesHeaderLinkForm.goodThoughts')}</FormLabel>
+              <GoodThoughtsTable
+                hideAddLink={true}
+                onSelect={(id) => form.setValue('goodThoughtId', id)}
+              />
+              <Input type="hidden" {...field} />
+              <FormErrorMessage>
+                {t('dailyUpdatesHeaderLinkForm.errors.goodThought.required')}
+              </FormErrorMessage>
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="daySpecialId"
+          control={form.control}
+          rules={{ required: true }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('dailyUpdatesHeaderLinkForm.daySpecial')}</FormLabel>
+              <DaySpecialsTable
+                hideAddLink={true}
+                onSelect={(id) => form.setValue('daySpecialId', id)}
+              />
+              <Input type="hidden" {...field} />
+              <FormErrorMessage>
+                {t('dailyUpdatesHeaderLinkForm.errors.daySpecial.required')}
+              </FormErrorMessage>
+            </FormItem>
+          )}
+        />
+
+        {/* <input
+            {...register('goodThoughtId', {
+              required: true,
+              validate: (value) => {
+                console.log({ value });
+                return !!value;
+              },
+            })}
+            type="hidden"
+          /> */}
+        {/* {errors.goodThoughtId && (
+            <p className="text-danger text-sm">
+              {t('dailyUpdatesHeaderLinkForm.errors.goodThought.required')}
+            </p>
+          )} */}
+
+        {/* <h4 className="text-lg mb-4">{t('dailyUpdatesHeaderLinkForm.daySpecial')}</h4>
         <DaySpecialsTable hideAddLink={true} onSelect={(id) => setValue('daySpecialId', id)} />
         <input {...register('daySpecialId', { required: true })} type="hidden" />
         {errors.daySpecialId && (
           <p className="text-danger text-sm">
             {t('dailyUpdatesHeaderLinkForm.errors.daySpecial.required')}
           </p>
+        )} */}
+        {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.root.error')}</p>}
+        {isSuccess && (
+          <p className="text-success mb-4">
+            <Trans i18nKey={'linkDailyUpdateForm.root.success'}>
+              Good thought and day special linked successfully,{' '}
+              <Link className="text-primary" to="/daily-updates">
+                go to daily updates
+              </Link>
+            </Trans>
+          </p>
         )}
-      </div>
-      {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.root.error')}</p>}
-      {isSuccess && (
-        <p className="text-success mb-4">
-          <Trans i18nKey={'linkDailyUpdateForm.root.success'}>
-            Good thought and day special linked successfully,{' '}
-            <Link className="text-primary" to="/dashboard/daily-updates">
-              go to daily updates
-            </Link>
-          </Trans>
-        </p>
-      )}
-      <Button
-        isFullWidth={true}
-        size={'lg'}
-        type="submit"
-        label={t('dailyUpdatesHeaderLinkForm.save')}
-      ></Button>
-    </form>
+        <Button size={'lg'} type="submit">
+          {t('dailyUpdatesHeaderLinkForm.save')}
+        </Button>
+      </form>
+    </Form>
   );
 };

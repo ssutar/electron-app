@@ -1,14 +1,12 @@
-import Breadcrumb from '@renderer/components/Breadcrumbs/Breadcrumb';
-import { UpdateForm } from '@renderer/components/Updates/UpdateForm';
-import React from 'react';
+import { useSetBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
+import { UpdateForm } from '@/components/Updates/UpdateForm';
 import { useTranslation } from 'react-i18next';
 
 export const AddUpdatesPage = () => {
   const { t } = useTranslation();
-  return (
-    <>
-      <Breadcrumb title={t('addUpdatesPage.title')} />
-      <UpdateForm />
-    </>
-  );
+  useSetBreadcrumbs([
+    { name: t('breadcrumb.updates'), path: '/updates' },
+    { name: t('breadcrumb.addUpdates'), path: '/updates/add' },
+  ]);
+  return <UpdateForm />;
 };

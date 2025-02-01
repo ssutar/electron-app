@@ -143,8 +143,8 @@ app.whenReady().then(() => {
         du.period, 
         u.*, 
         s.title as subject
-      FROM DailyUpdates du JOIN Updates u ON (du.updateId = u.id) 
-      JOIN Subjects s ON (u.subjectId = s.id AND u.teacherId = s.teacherId)
+      FROM DailyUpdates du LEFT OUTER JOIN Updates u ON (du.updateId = u.id) 
+      LEFT OUTER JOIN Subjects s ON (u.subjectId = s.id AND u.teacherId = s.teacherId)
       WHERE du.date = @date AND du.teacherId = @teacherId`,
     );
     const result = stmt.all({ date, teacherId });

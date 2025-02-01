@@ -54,13 +54,13 @@ export const AuthContextProvider = ({ children }) => {
     const teacherData = await window.api.login(data);
     if (!teacherData) {
       throw new Error('User not found', {
-        cause: 404
+        cause: 404,
       });
     }
     window.localStorage.setItem('auth', JSON.stringify(teacherData));
     setIsAuthenticated(true);
     setAuthUser(teacherData);
-    navigate('/dashboard');
+    navigate('/updates');
   };
 
   const logout = () => {
@@ -74,9 +74,9 @@ export const AuthContextProvider = ({ children }) => {
       authUser,
       signup,
       login,
-      logout
+      logout,
     }),
-    [isAuthenticated, authUser]
+    [isAuthenticated, authUser],
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

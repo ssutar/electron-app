@@ -1,15 +1,15 @@
 import React from 'react';
 import { useAuth } from '../AuthContext';
-import { Link, Navigate, Outlet } from 'react-router-dom';
-import DefaultLayout from '../layout/DefaultLayout';
+import { Navigate, Outlet } from 'react-router-dom';
+import { AuthenticatedLayout } from '../layout/AuthenticatedLayout';
 
 export const RequireAuth = () => {
   const { isAuthenticated } = useAuth();
   return isAuthenticated ? (
     <>
-      <DefaultLayout>
+      <AuthenticatedLayout>
         <Outlet />
-      </DefaultLayout>
+      </AuthenticatedLayout>
     </>
   ) : (
     <Navigate to="/login" replace />

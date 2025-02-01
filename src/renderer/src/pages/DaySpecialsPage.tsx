@@ -1,17 +1,21 @@
-import Breadcrumb from '@renderer/components/Breadcrumbs/Breadcrumb';
-import { DaySpecialsTable } from '@renderer/components/DaySpecials';
-import { Card } from '@renderer/components/UI/Card';
+import { useSetBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
+import { DaySpecialsTable } from '@/components/DaySpecials';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const DaySpecialsPage = () => {
   const { t } = useTranslation();
-
+  useSetBreadcrumbs([{ name: t('breadcrumb.daySpecials'), path: '/day-specials' }]);
   return (
     <>
-      <Breadcrumb title={t('daySpecialsPage.title')} />
       <Card>
-        <DaySpecialsTable />
+        <CardHeader>
+          <CardTitle className="text-2xl">{t('daySpecialsPage.title')}</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <DaySpecialsTable />
+        </CardContent>
       </Card>
     </>
   );
