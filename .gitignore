@@ -8,6 +8,7 @@ lerna-debug.log*
 .pnpm-debug.log*
 
 .DS_Store
+dist
 
 # Runtime data
 pids
