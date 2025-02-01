@@ -1,14 +1,13 @@
 import { IGoodThought } from '@interfaces/models';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
-import { Card } from '../ui/Card';
-import { BlockLoader } from '../ui/Loaders';
+import { useAuth } from '@/components/AuthContext';
+import { BlockLoader } from '@/components/ui/Loaders';
 import { useDataTable } from '@/hooks/useDataTable';
-import { DataTableRenderer } from '../ui/data-table-renderer';
-import { Button } from '../ui/button';
+import { DataTableRenderer } from '@/components/ui/data-table-renderer';
+import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
 export type GoodThoughtsTableProps = {
@@ -16,7 +15,7 @@ export type GoodThoughtsTableProps = {
   hideAddLink?: boolean;
 };
 export const GoodThoughtsTable = ({ onSelect, hideAddLink = false }: GoodThoughtsTableProps) => {
-  const [selectedId, setSelectedId] = useState(null);
+  const [_selectedId, setSelectedId] = useState(null);
   const { t } = useTranslation();
 
   const { authUser } = useAuth();

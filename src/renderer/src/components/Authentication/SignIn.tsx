@@ -5,7 +5,7 @@ import { ILoginFormData } from '@interfaces/models';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '@/components/AuthContext';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {

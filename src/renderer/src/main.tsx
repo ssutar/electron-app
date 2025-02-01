@@ -5,12 +5,12 @@ import ReactDOM from 'react-dom/client';
 import App from './App';
 
 import './i18n';
-import Loader from './components/common/Loader';
+import { BlockLoader } from '@/components/ui/Loaders';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <React.Suspense fallback={<Loader />}>
+    <React.Suspense fallback={<BlockLoader />}>
       <App />
     </React.Suspense>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

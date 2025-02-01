@@ -1,4 +1,3 @@
-import React from 'react';
 import { GoodThoughtsTable } from '../GoodThoughts';
 import { Button } from '@/components/ui/button';
 import { Trans, useTranslation } from 'react-i18next';

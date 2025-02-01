@@ -2,7 +2,6 @@ import { useSetBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
 import { DailyUpdatesHeaderLinkForm } from '@/components/DailyUpdates/DailyUpdatesHeaderLinkForm';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatDate } from '@/utils/date';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSearchParams } from 'react-router-dom';
 

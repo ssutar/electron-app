@@ -1,12 +1,10 @@
 import { IDaySpecial } from '@interfaces/models';
 import { useMutation } from '@tanstack/react-query';
-import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
 import { Textarea } from '../ui/textarea';
 

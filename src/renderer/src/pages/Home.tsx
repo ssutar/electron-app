@@ -1,4 +1,3 @@
-import React from 'react';
 import { useAuth } from '../components/AuthContext';
 import { Navigate } from 'react-router-dom';
 

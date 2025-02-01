@@ -1,7 +1,6 @@
 import { useSetBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
 import { DaySpecialsTable } from '@/components/DaySpecials';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 export const DaySpecialsPage = () => {

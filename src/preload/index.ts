@@ -14,7 +14,6 @@ import type {
   IUpdate,
   IUpdateFormData,
 } from '../interfaces';
-import { get } from 'http';
 
 // Custom APIs for renderer
 export const api = {

@@ -1,6 +1,6 @@
-import { IDaySpecial, IGoodThought } from '@interfaces/models';
+import { IDaySpecial } from '@interfaces/models';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../AuthContext';
@@ -15,7 +15,7 @@ export type DaySpecialsTableProps = {
   hideAddLink?: boolean;
 };
 export const DaySpecialsTable = ({ onSelect, hideAddLink = false }: DaySpecialsTableProps) => {
-  const [selectedId, setSelectedId] = useState(null);
+  const [_selectedId, setSelectedId] = useState(null);
   const { t } = useTranslation();
 
   const { authUser } = useAuth();

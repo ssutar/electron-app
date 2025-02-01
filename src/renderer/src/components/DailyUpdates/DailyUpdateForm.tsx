@@ -10,7 +10,7 @@ import {
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/Card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
 import { useSubjects } from '@/hooks/useSubjects';
 import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '../AuthContext';

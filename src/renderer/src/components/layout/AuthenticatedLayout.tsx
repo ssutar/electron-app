@@ -10,7 +10,7 @@ import {
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { ModeToggle } from '../mode-toggle';
-import { useBreadcrumbs } from '../Breadcrumbs/Breadcrumb';
+import { useBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
 import { Link } from 'react-router-dom';
 
 const LocalBreadcrumb = () => {
@@ -23,7 +23,6 @@ const LocalBreadcrumb = () => {
     <Breadcrumb>
       <BreadcrumbList>
         {breadcrumbs.map((b, index) => {
-          console.log({ index });
           return (
             <>
               {index === breadcrumbs.length - 1 ? (
@@ -63,15 +62,7 @@ export const AuthenticatedLayout = ({ children }: { children: React.ReactNode })
             <ModeToggle />
           </div>
         </header>
-        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 text-sm">
-          {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
-          {children}
-        </div>
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0 text-sm">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

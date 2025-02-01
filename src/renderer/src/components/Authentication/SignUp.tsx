@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Card, CardContent } from '@/components/ui/Card';
+import { Card, CardContent } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import {
@@ -27,7 +27,6 @@ import Professor from '../../assets/illustrations/undraw_professor_d7zn.svg';
 
 const SignUp: React.FC = ({ className, ...props }: React.ComponentProps<'div'>) => {
   const { t } = useTranslation();
-  const grades = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const [schools, setSchools] = useState<ISchool[]>([]);
   const form = useForm<ISignupFormData>();
   const { signup } = useAuth();
