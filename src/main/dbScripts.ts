@@ -103,7 +103,7 @@ export const insertFakeData = (db: Database): void => {
     `
     INSERT OR IGNORE INTO Schools
       (id, name, address)
-      VALUES(1, 'Shivaji school', 'Vita');
+      VALUES(1, 'School one', 'City one');
   `,
     `
     INSERT OR IGNORE INTO Schools
