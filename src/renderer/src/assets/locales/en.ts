@@ -331,7 +331,7 @@ export default {
         },
       },
       root: {
-        success: 'Good thought inserted successfully, <2>go back to good thoughts</2>',
+        success: 'Good quote inserted successfully, <2>go back to good quotes</2>',
         error: 'Something went wrong, please try again later',
       },
     },

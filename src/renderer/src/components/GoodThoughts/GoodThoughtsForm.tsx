@@ -68,9 +68,9 @@ export const GoodThoughtsForm = () => {
         {isSuccess && (
           <p className="text-success mb-4">
             <Trans i18nKey={'addGoodThoughtForm.root.success'}>
-              Good thought inserted successfully,{' '}
+              Good quote inserted successfully,{' '}
               <Link className="text-primary" to="/good-thoughts">
-                go back to good thoughts
+                go back to good quotes
               </Link>
             </Trans>
           </p>
