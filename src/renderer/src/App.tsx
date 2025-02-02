@@ -4,6 +4,7 @@ import { RequireAuth } from './components/RequireAuth';
 import {
   AddDaySpecialsPage,
   AddGoodThoughtsPage,
+  AddSubjectsPage,
   AddUpdatesPage,
   DailyUpdatesPage,
   DaySpecialsPage,
@@ -14,6 +15,7 @@ import {
   LoginPage,
   SignUpPage,
   StatusPage,
+  SubjectsPage,
   Updates,
 } from './pages';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
@@ -43,6 +45,10 @@ function App() {
                   <Route path="/day-specials">
                     <Route index element={<DaySpecialsPage />} />
                     <Route path="add" element={<AddDaySpecialsPage />} />
+                  </Route>
+                  <Route path="/subjects">
+                    <Route index element={<SubjectsPage />} />
+                    <Route path="add" element={<AddSubjectsPage />} />
                   </Route>
                   <Route path="/daily-updates">
                     <Route index element={<DailyUpdatesPage />} />

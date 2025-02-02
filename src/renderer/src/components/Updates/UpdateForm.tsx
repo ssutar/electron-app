@@ -1,6 +1,6 @@
 import { IUpdateFormData } from '@interfaces/models';
 import { Trans, useTranslation } from 'react-i18next';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '@/components/AuthContext';
 import { useForm } from 'react-hook-form';
 import {
   Select,
@@ -22,7 +22,7 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
-import { Textarea } from '../ui/textarea';
+import { Textarea } from '@/components/ui/textarea';
 import { ArrowLeft } from 'lucide-react';
 
 export const UpdateForm = () => {
@@ -268,7 +268,7 @@ export const UpdateForm = () => {
                 </FormItem>
               )}
             />
-            {isError && <p className="text-destructive mb-4">{t('addUpdateForm.root.error')}</p>}
+            {isError && <p className="text-destructive">{t('addUpdateForm.root.error')}</p>}
             {isSuccess && (
               <p className="text-success mb-4">
                 <Trans i18nKey={'addUpdateForm.root.success'}>

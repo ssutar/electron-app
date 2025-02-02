@@ -1,5 +1,12 @@
 import * as React from 'react';
-import { BookAIcon, BookOpen, BookType, Calendar, NotebookPen } from 'lucide-react';
+import {
+  BookAIcon,
+  BookOpen,
+  BookType,
+  CalendarHeart,
+  CalendarSearch,
+  NotebookPen,
+} from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
@@ -40,7 +47,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {
           title: t('sidebar.navMain.dailyUpdates'),
           url: '#',
-          icon: Calendar,
+          icon: CalendarSearch,
           items: [
             {
               title: t('sidebar.navMain.allDailyUpdates'),
@@ -74,7 +81,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         {
           title: t('sidebar.navMain.daySpecials'),
           url: '#',
-          icon: BookOpen,
+          icon: CalendarHeart,
           items: [
             {
               title: t('sidebar.navMain.allDaySpecials'),
@@ -83,6 +90,21 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             {
               title: t('sidebar.navMain.addDaySpecials'),
               url: '/day-specials/add',
+            },
+          ],
+        },
+        {
+          title: t('sidebar.navMain.subjects'),
+          url: '#',
+          icon: BookOpen,
+          items: [
+            {
+              title: t('sidebar.navMain.allSubjects'),
+              url: '/subjects',
+            },
+            {
+              title: t('sidebar.navMain.addSubjects'),
+              url: '/subjects/add',
             },
           ],
         },

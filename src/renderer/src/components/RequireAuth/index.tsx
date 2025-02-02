@@ -1,6 +1,6 @@
-import { useAuth } from '../AuthContext';
+import { useAuth } from '@/components/AuthContext';
 import { Navigate, Outlet } from 'react-router-dom';
-import { AuthenticatedLayout } from '../layout/AuthenticatedLayout';
+import { AuthenticatedLayout } from '@/components/layout/AuthenticatedLayout';
 
 export const RequireAuth = () => {
   const { isAuthenticated } = useAuth();

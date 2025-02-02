@@ -20,6 +20,11 @@ export const api = {
   getAllSubjects: (teacherId: string): Promise<ISubject[]> => {
     return ipcRenderer.invoke('getAllSubjects', teacherId);
   },
+
+  insertSubject: (params: Omit<ISubject, 'id'>): Promise<ISubject[]> => {
+    return ipcRenderer.invoke('insertSubject', params);
+  },
+
   getSchools: (): Promise<ISchool[]> => {
     return ipcRenderer.invoke('getSchools');
   },

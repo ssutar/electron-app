@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: electron-app
+appId: com.teacherup.app
+productName: teacherup
 directories:
   buildResources: build
 files:
@@ -9,10 +9,12 @@ files:
   - '!{.eslintignore,.eslintrc.cjs,.prettierignore,.prettierrc.yaml,dev-app-update.yml,CHANGELOG.md,README.md}'
   - '!{.env,.env.*,.npmrc,pnpm-lock.yaml}'
   - '!{tsconfig.json,tsconfig.node.json,tsconfig.web.json}'
+extraFiles:
+  - './db/*'
 asarUnpack:
   - resources/**
 win:
-  executableName: electron-app
+  executableName: teacherup
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}

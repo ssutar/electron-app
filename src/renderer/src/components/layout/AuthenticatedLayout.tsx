@@ -9,13 +9,12 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
-import { ModeToggle } from '../mode-toggle';
+import { ModeToggle } from '@/components/mode-toggle';
 import { useBreadcrumbs } from '@/components/Breadcrumbs/Breadcrumb';
 import { Link } from 'react-router-dom';
 
 const LocalBreadcrumb = () => {
   const { breadcrumbs } = useBreadcrumbs();
-  console.log('######', { breadcrumbs });
   if (!breadcrumbs.length) {
     return null;
   }

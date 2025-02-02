@@ -1,4 +1,4 @@
-import { IDaySpecial } from '@interfaces/models';
+import { ISubject } from '@interfaces/models';
 import { useQuery } from '@tanstack/react-query';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -10,11 +10,11 @@ import { DataTableRenderer } from '@/components/ui/data-table-renderer';
 import { Button } from '@/components/ui/button';
 import { Plus } from 'lucide-react';
 
-export type DaySpecialsTableProps = {
+export type SubjectsTableProps = {
   onSelect?: (id: string) => void;
   hideAddLink?: boolean;
 };
-export const DaySpecialsTable = ({ onSelect, hideAddLink = false }: DaySpecialsTableProps) => {
+export const SubjectsTable = ({ onSelect, hideAddLink = false }: SubjectsTableProps) => {
   const [_selectedId, setSelectedId] = useState(null);
   const { t } = useTranslation();
 
@@ -24,10 +24,10 @@ export const DaySpecialsTable = ({ onSelect, hideAddLink = false }: DaySpecialsT
     data: daySpecials,
     isLoading,
     isSuccess,
-  } = useQuery<IDaySpecial[]>({
-    queryKey: ['day-specials', authUser?.id],
+  } = useQuery<ISubject[]>({
+    queryKey: ['subjects', authUser?.id],
     queryFn: async () => {
-      return window.api.getAllDaySpecials(authUser?.id || '');
+      return window.api.getAllSubjects(authUser?.id || '');
     },
     enabled: !!authUser?.id,
   });
@@ -40,12 +40,12 @@ export const DaySpecialsTable = ({ onSelect, hideAddLink = false }: DaySpecialsT
     });
   };
 
-  const { table } = useDataTable<IDaySpecial>({
-    tableId: 'daySpecialsTable',
-    columnIds: ['special'],
+  const { table } = useDataTable<ISubject>({
+    tableId: 'subjectsTable',
+    columnIds: ['title'],
     data: daySpecials || [],
     onSelect: handleSelect,
-    filterByColumnId: 'special',
+    filterByColumnId: 'title',
   });
 
   return (
@@ -60,7 +60,7 @@ export const DaySpecialsTable = ({ onSelect, hideAddLink = false }: DaySpecialsT
                   className="inline-block px-4 text-primary text-lg text-right"
                   to="/day-specials/add"
                 >
-                  <Plus /> {t('daySpecialsTable.add')}
+                  <Plus /> {t('subjectsTable.add')}
                 </Link>
               </Button>
             </div>

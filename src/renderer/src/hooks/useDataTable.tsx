@@ -77,7 +77,9 @@ export const useDataTable = <T extends { id: string }>({
         id: 'actions',
         size: 80,
         enableHiding: false,
-        header: () => <div className="text-center w-16">Actions</div>,
+        header: () => (
+          <div className="text-center w-16">{t(`${tableId}.columns.actions.actionLabel`)}</div>
+        ),
         cell: () => {
           return (
             <div className="text-center">

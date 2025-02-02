@@ -3,10 +3,17 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useTranslation, Trans } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '@/components/AuthContext';
 import { Button } from '@/components/ui/button';
-import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
-import { Textarea } from '../ui/textarea';
+import {
+  Form,
+  FormControl,
+  FormErrorMessage,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form';
+import { Textarea } from '@/components/ui/textarea';
 
 export const GoodThoughtsForm = () => {
   const form = useForm<IGoodThought>();
@@ -57,7 +64,7 @@ export const GoodThoughtsForm = () => {
           )}
         />
 
-        {isError && <p className="text-danger mb-4">{t('addGoodThoughtForm.root.error')}</p>}
+        {isError && <p className="text-destructive">{t('addGoodThoughtForm.root.error')}</p>}
         {isSuccess && (
           <p className="text-success mb-4">
             <Trans i18nKey={'addGoodThoughtForm.root.success'}>

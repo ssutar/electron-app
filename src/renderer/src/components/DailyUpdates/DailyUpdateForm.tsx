@@ -10,13 +10,20 @@ import {
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useSubjects } from '@/hooks/useSubjects';
 import { useQuery } from '@tanstack/react-query';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '@/components/AuthContext';
 import { DailyUpdateLinkForm } from './DailyUpdateLinkForm';
 import { BlockLoader } from '@/components/ui/Loaders';
-import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
+import {
+  Form,
+  FormControl,
+  FormErrorMessage,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form';
 import { Link } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 
@@ -137,7 +144,7 @@ export const DailyUpdateForm = ({ date }: DailyUpdateFormProps) => {
               </form>
             </Form>
             <>
-              {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.error')}</p>}
+              {isError && <p className="text-destructive">{t('linkDailyUpdateForm.error')}</p>}
               {isLoading && <BlockLoader />}
               {isSuccess && (
                 <>

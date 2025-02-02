@@ -4,7 +4,12 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils';
 import icon from '../../resources/icon.png?asset';
 
 import { db } from './dbManager';
-import { startDB } from './dbScripts';
+import { insertFakeData, startDB } from './dbScripts';
+
+// console.log('#################################', app.getAppPath(), app.getPath('userData'), {
+//   mode: import.meta.env.MODE,
+//   env: process.env,
+// });
 
 let mainWindow: BrowserWindow;
 
@@ -30,7 +35,10 @@ function createWindow(): void {
     shell.openExternal(details.url);
     return { action: 'deny' };
   });
-  mainWindow.webContents.openDevTools();
+
+  if (is.dev) {
+    mainWindow.webContents.openDevTools();
+  }
 
   // HMR for renderer base on electron-vite cli.
   // Load the remote URL for development or the local html file for production.
@@ -56,6 +64,7 @@ app.whenReady().then(() => {
   });
 
   startDB(db);
+  insertFakeData(db);
 
   // IPC test
   ipcMain.on('ping', () => console.log('pong'));
@@ -166,6 +175,15 @@ app.whenReady().then(() => {
   ipcMain.handle('getAllSubjects', (_, teacherId) => {
     const stmt = db.prepare('SELECT * FROM Subjects WHERE teacherId = @teacherId');
     const result = stmt.all({ teacherId });
+    return result;
+  });
+
+  ipcMain.handle('insertSubject', (_, params) => {
+    const stmt = db.prepare(`INSERT INTO Subjects
+      (title, teacherId)
+      VALUES(@title, @teacherId)
+    `);
+    const result = stmt.run(params);
     return result;
   });
 

@@ -17,6 +17,9 @@ export default {
       daySpecials: 'Day specials',
       allDaySpecials: 'All day specials',
       addDaySpecials: 'Add day specials',
+      subjects: 'Subjects',
+      allSubjects: 'All subjects',
+      addSubjects: 'Add subjects',
     },
     sidebar: {
       brandName: 'TeacherUp',
@@ -35,6 +38,9 @@ export default {
         daySpecials: 'Day specials',
         allDaySpecials: 'All day specials',
         addDaySpecials: 'Add day specials',
+        subjects: 'Subjects',
+        allSubjects: 'All subjects',
+        addSubjects: 'Add subjects',
       },
       user: {
         account: 'Account',
@@ -57,6 +63,9 @@ export default {
     daySpecialsPage: {
       title: 'Day specials',
     },
+    subjectsPage: {
+      title: 'Subjects',
+    },
     addGoodThoughtsPage: {
       title: 'Add good quote',
       backToGoodThoughtsPage: 'Back to good quotes',
@@ -64,6 +73,10 @@ export default {
     addDaySpecialsPage: {
       title: 'Add day special',
       backToDaySpecialsPage: 'Back to day specials',
+    },
+    addSubjectsPage: {
+      title: 'Add subject',
+      backToSubjectsPage: 'Back to subjects',
     },
     linkDailyUpdatesHeaderPage: {
       title: 'Change good quote and day special for {{date}}',
@@ -168,6 +181,23 @@ export default {
       columnsSelector: 'Select columns',
       add: 'Add day special',
       empty: 'No day specials found, please add day specials',
+    },
+    subjectsTable: {
+      columns: {
+        index: 'Index',
+        title: 'Title',
+        selectRow: 'Select subject',
+        actions: {
+          openMenu: 'Open actions menu',
+          actionLabel: 'Actions',
+          edit: 'Edit',
+          delete: 'Delete',
+        },
+      },
+      filterBy: 'Filter by title',
+      columnsSelector: 'Select columns',
+      add: 'Add subject',
+      empty: 'No subjects found, please add subjects',
     },
     addUpdateForm: {
       title: 'Add updates',
@@ -313,6 +343,20 @@ export default {
       },
       root: {
         success: 'Day special inserted successfully, <2>go back to day specials</2>',
+        error: 'Something went wrong, please try again later',
+      },
+    },
+    addSubjectForm: {
+      title: 'Title',
+      titlePlaceholder: 'Enter title',
+      save: 'Save',
+      errors: {
+        title: {
+          required: 'Please select a valid title',
+        },
+      },
+      root: {
+        success: 'Subject inserted successfully, <2>go back to subjects</2>',
         error: 'Something went wrong, please try again later',
       },
     },

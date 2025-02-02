@@ -77,7 +77,7 @@ export interface ITeacher {
 }
 
 export interface ISubject {
-  id?: string;
+  id: string;
   title: string;
   teacherId: string;
 }

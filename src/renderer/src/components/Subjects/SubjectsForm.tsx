@@ -1,4 +1,4 @@
-import { IDaySpecial } from '@interfaces/models';
+import { ISubject } from '@interfaces/models';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { useTranslation, Trans } from 'react-i18next';
@@ -13,10 +13,10 @@ import {
   FormItem,
   FormLabel,
 } from '@/components/ui/form';
-import { Textarea } from '@/components/ui/textarea';
+import { Input } from '@/components/ui/input';
 
-export const DaySpecialsForm = () => {
-  const form = useForm<IDaySpecial>();
+export const SubjectsForm = () => {
+  const form = useForm<ISubject>();
   const { t } = useTranslation();
   const { authUser } = useAuth();
 
@@ -27,11 +27,11 @@ export const DaySpecialsForm = () => {
     isSuccess,
     reset: resetMutation,
   } = useMutation({
-    mutationFn: (data: IDaySpecial) => {
+    mutationFn: (data: ISubject) => {
       if (authUser?.id) {
         data.teacherId = authUser.id;
       }
-      return window.api.insertDaySpecial(data);
+      return window.api.insertSubject(data);
     },
     onError: (error) => {
       console.log(error);
@@ -41,7 +41,7 @@ export const DaySpecialsForm = () => {
     },
   });
 
-  const onUpdateSubmit = (data: IDaySpecial) => {
+  const onUpdateSubmit = (data: ISubject) => {
     resetMutation();
     return mutateAsync(data);
   };
@@ -50,32 +50,32 @@ export const DaySpecialsForm = () => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onUpdateSubmit)} className="grid grid-cols-1 gap-6">
         <FormField
-          name="special"
+          name="title"
           control={form.control}
           rules={{ required: true }}
           render={({ field }) => (
             <FormItem>
-              <FormLabel htmlFor="special">{t('addDaySpecialForm.special')}</FormLabel>
+              <FormLabel htmlFor="title">{t('addSubjectForm.title')}</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder={t('addDaySpecialForm.specialPlaceholder')} />
+                <Input {...field} placeholder={t('addSubjectForm.titlePlaceholder')} />
               </FormControl>
-              <FormErrorMessage>{t('addDaySpecialForm.errors.special.required')}</FormErrorMessage>
+              <FormErrorMessage>{t('addSubjectForm.errors.title.required')}</FormErrorMessage>
             </FormItem>
           )}
         />
-        {isError && <p className="text-destructive">{t('addDaySpecialForm.root.error')}</p>}
+        {isError && <p className="text-destructive">{t('addSubjectForm.root.error')}</p>}
         {isSuccess && (
           <p className="text-success mb-4">
-            <Trans i18nKey={'addDaySpecialForm.root.success'}>
-              Day special inserted successfully,{' '}
-              <Link className="text-primary" to="/day-specials">
-                go back to day specials
+            <Trans i18nKey={'addSubjectForm.root.success'}>
+              Subject inserted successfully,{' '}
+              <Link className="text-primary" to="/subjects">
+                go back to subjects
               </Link>
             </Trans>
           </p>
         )}
         <Button disabled={isPending} size={'lg'} type="submit">
-          {t('addDaySpecialForm.save')}
+          {t('addSubjectForm.save')}
         </Button>
       </form>
     </Form>

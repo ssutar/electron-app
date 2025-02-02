@@ -9,13 +9,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { UpdatesTable } from '../Updates/UpdatesTable';
+import { UpdatesTable } from '@/components/Updates/UpdatesTable';
 import { useMutation } from '@tanstack/react-query';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '@/components/AuthContext';
 import { Link } from 'react-router-dom';
-import { Form, FormControl, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
-import { Input } from '../ui/input';
-import { H3 } from '../ui/typography';
+import {
+  Form,
+  FormControl,
+  FormErrorMessage,
+  FormField,
+  FormItem,
+  FormLabel,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { H3 } from '@/components/ui/typography';
 
 type DailyUpdateLinkFormProps = {
   date: string;
@@ -90,7 +97,7 @@ export const DailyUpdateLinkForm = ({ updates, date }: DailyUpdateLinkFormProps)
             </FormItem>
           )}
         />
-        {isError && <p className="text-danger">{t('linkDailyUpdateForm.root.error')}</p>}
+        {isError && <p className="text-destructive">{t('linkDailyUpdateForm.root.error')}</p>}
         {isSuccess && (
           <p className="text-success">
             <Trans i18nKey={'linkDailyUpdateForm.root.success'}>

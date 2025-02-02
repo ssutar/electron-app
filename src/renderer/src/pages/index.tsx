@@ -11,3 +11,5 @@ export * from './LoginPage';
 export * from './SignUpPage';
 export * from './StatusPage';
 export * from './Updates';
+export * from './SubjectsPage';
+export * from './AddSubjectsPage';

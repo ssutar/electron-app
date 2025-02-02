@@ -4,7 +4,7 @@ const startScripts = [
   `
     CREATE TABLE IF NOT EXISTS Schools (
       id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      name TEXT NOT NULL,
+      name TEXT UNIQUE NOT NULL,
       address TEXT NOT NULL
     );
   `,
@@ -21,7 +21,7 @@ const startScripts = [
   `
     CREATE TABLE IF NOT EXISTS Subjects (
       id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-      title TEXT NOT NULL,
+      title TEXT UNIQUE NOT NULL,
       teacherId INTEGER NOT NULL,
       CONSTRAINT Subjects_Teachers_FK FOREIGN KEY (teacherId) REFERENCES Teachers(id)
     );
@@ -88,6 +88,31 @@ const startScripts = [
 
 export const startDB = (db: Database): void => {
   startScripts.forEach((script) => {
+    db.prepare(script).run();
+  });
+};
+
+export const insertFakeData = (db: Database): void => {
+  if (process.env.NODE_ENV === 'production') {
+    return;
+  }
+
+  console.log('###########', 'Inserting fake schools for testing', '##############');
+
+  const scripts = [
+    `
+    INSERT OR IGNORE INTO Schools
+      (id, name, address)
+      VALUES(1, 'Shivaji school', 'Vita');
+  `,
+    `
+    INSERT OR IGNORE INTO Schools
+      (id, name, address)
+      VALUES(2, 'School two', 'City two');
+  `,
+  ];
+
+  scripts.forEach((script) => {
     db.prepare(script).run();
   });
 };

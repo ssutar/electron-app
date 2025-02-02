@@ -1,14 +1,14 @@
-import { GoodThoughtsTable } from '../GoodThoughts';
+import { GoodThoughtsTable } from '@/components/GoodThoughts';
 import { Button } from '@/components/ui/button';
 import { Trans, useTranslation } from 'react-i18next';
-import { DaySpecialsTable } from '../DaySpecials';
-import { useAuth } from '../AuthContext';
+import { DaySpecialsTable } from '@/components/DaySpecials';
+import { useAuth } from '@/components/AuthContext';
 import { useMutation } from '@tanstack/react-query';
 import { IDailyUpdateHeaderFormData } from '@interfaces/models';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { Form, FormErrorMessage, FormField, FormItem, FormLabel } from '../ui/form';
-import { Input } from '../ui/input';
+import { Form, FormErrorMessage, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { ArrowLeft } from 'lucide-react';
 
 export type DailyUpdatesHeaderLinkFormProps = {
@@ -97,7 +97,7 @@ export const DailyUpdatesHeaderLinkForm = ({ date }: DailyUpdatesHeaderLinkFormP
             type="hidden"
           /> */}
         {/* {errors.goodThoughtId && (
-            <p className="text-danger text-sm">
+            <p className="text-destructive text-sm">
               {t('dailyUpdatesHeaderLinkForm.errors.goodThought.required')}
             </p>
           )} */}
@@ -106,11 +106,11 @@ export const DailyUpdatesHeaderLinkForm = ({ date }: DailyUpdatesHeaderLinkFormP
         <DaySpecialsTable hideAddLink={true} onSelect={(id) => setValue('daySpecialId', id)} />
         <input {...register('daySpecialId', { required: true })} type="hidden" />
         {errors.daySpecialId && (
-          <p className="text-danger text-sm">
+          <p className="text-destructive text-sm">
             {t('dailyUpdatesHeaderLinkForm.errors.daySpecial.required')}
           </p>
         )} */}
-        {isError && <p className="text-danger mb-4">{t('linkDailyUpdateForm.root.error')}</p>}
+        {isError && <p className="text-destructive">{t('linkDailyUpdateForm.root.error')}</p>}
         {isSuccess && (
           <p className="text-success mb-4">
             <Trans i18nKey={'linkDailyUpdateForm.root.success'}>
