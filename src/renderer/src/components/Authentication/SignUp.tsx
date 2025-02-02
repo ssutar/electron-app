@@ -112,7 +112,7 @@ const SignUp: React.FC = ({ className, ...props }: React.ComponentProps<'div'>) 
                           ))}
                         </SelectContent>
                       </Select>
-                      <FormErrorMessage>{t('signupForm.errors.grade.required')}</FormErrorMessage>
+                      <FormErrorMessage>{t('signupForm.errors.school.required')}</FormErrorMessage>
                     </FormItem>
                   )}
                 />

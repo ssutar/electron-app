@@ -81,6 +81,9 @@ export default {
     linkDailyUpdatesHeaderPage: {
       title: 'Change good quote and day special for {{date}}',
     },
+    statusPage: {
+      goToHomePage: 'Go back to home',
+    },
     dateInputForm: {
       title: 'Search',
       description: 'Select the date and search for daily updates',
@@ -417,7 +420,9 @@ export default {
         },
         password: {
           required: 'Please enter a valid password',
-          shouldMatch: 'The passwords should match',
+        },
+        confirmPassword: {
+          required: 'The passwords should match',
         },
       },
     },
