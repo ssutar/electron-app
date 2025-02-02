@@ -47,6 +47,6 @@ jspm_packages/
 .env.local
 
 # electron
-build/
+# build/
 db/*.db*
 out/
